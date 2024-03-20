@@ -15,7 +15,7 @@ Le projet sera basé sur une architecture **MVC** :
 
 ## Exemples d'utilisations des patrons de conceptions
 
-* **Observateur/Observable (Observer/Observable)**
+* **Observateur/Observable**
 Surveiller les événements du jeu, comme la mort d'un ennemi ou la collecte d'un objet par le joueur.
 
 * **Stratégie**
