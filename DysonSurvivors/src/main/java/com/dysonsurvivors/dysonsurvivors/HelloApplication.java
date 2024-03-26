@@ -1,7 +1,6 @@
 package com.dysonsurvivors.dysonsurvivors;
 
 import javafx.animation.AnimationTimer;
-import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,10 +10,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.IOException;
-import java.util.Random;
 
 public class HelloApplication extends Application {
 
@@ -25,6 +22,11 @@ public class HelloApplication extends Application {
     private Circle character;
     private Circle enemy;
     private Label coordinatesLabel;
+    private boolean upPressed = false;
+    private boolean downPressed = false;
+    private boolean leftPressed = false;
+    private boolean rightPressed = false;
+    private double playerSpeed = 3;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -38,54 +40,16 @@ public class HelloApplication extends Application {
         character = (Circle) loader.getNamespace().get("character");
         coordinatesLabel = (Label) loader.getNamespace().get("coordinatesLabel");
 
-        TranslateTransition translateCharacterX = new TranslateTransition(Duration.millis(200), character);
-        TranslateTransition translateCharacterY = new TranslateTransition(Duration.millis(200), character);
-        TranslateTransition translateRootX = new TranslateTransition(Duration.millis(200), (Pane) root);
-        TranslateTransition translateRootY = new TranslateTransition(Duration.millis(200), (Pane) root);
-
-        scene.setOnKeyPressed(event -> {
-            switch (event.getCode()) {
-                case Z:
-                    translateCharacterX.stop();
-                    translateCharacterY.setToY(character.getTranslateY() - 10);
-                    translateRootY.setByY(10);
-                    translateCharacterY.play();
-                    translateRootY.play();
-                    break;
-                case S:
-                    translateCharacterX.stop();
-                    translateCharacterY.setToY(character.getTranslateY() + 10);
-                    translateRootY.setByY(-10);
-                    translateCharacterY.play();
-                    translateRootY.play();
-                    break;
-                case Q:
-                    translateCharacterY.stop();
-                    translateCharacterX.setToX(character.getTranslateX() - 10);
-                    translateRootX.setByX(10);
-                    translateCharacterX.play();
-                    translateRootX.play();
-                    break;
-                case D:
-                    translateCharacterY.stop();
-                    translateCharacterX.setToX(character.getTranslateX() + 10);
-                    translateRootX.setByX(-10);
-                    translateCharacterX.play();
-                    translateRootX.play();
-                    break;
-                default:
-                    break;
-            }
-            coordinatesLabel.setText("Coordinates: (" + (character.getCenterX() + translateCharacterX.getByX()) + ", " +
-                    (character.getCenterY() + translateCharacterY.getByY()) + ")");
-        });
-
         enemy = new Circle(ENEMY_RADIUS);
         enemy.setStyle("-fx-fill: red;");
         enemy.relocate(GAME_WIDTH / 2, GAME_HEIGHT / 2);
 
         Pane gamePane = (Pane) root.lookup("#gamePane");
         gamePane.getChildren().add(enemy);
+
+        // Event handlers for key presses and releases
+        scene.setOnKeyPressed(event -> handleKeyPress(event.getCode()));
+        scene.setOnKeyReleased(event -> handleKeyRelease(event.getCode()));
 
         // Start the game loop
         startGameLoop();
@@ -104,24 +68,39 @@ public class HelloApplication extends Application {
     }
 
     private void update() {
-        // Update player coordinates
-        double playerX = character.getTranslateX() + character.getCenterX();
-        double playerY = character.getTranslateY() + character.getCenterY();
-
+        // Move the player
+        moveCharacter();
         // Move enemy towards the player
         moveEnemyTowardsPlayer();
         // Update coordinates label
-        updateCoordinatesLabel(playerX, playerY);
+        updateCoordinatesLabel();
+        // Center camera on player
+        centerCameraOnPlayer();
+    }
+
+    private void moveCharacter() {
+        double dx = 0, dy = 0;
+        if (upPressed) dy -= playerSpeed;
+        if (downPressed) dy += playerSpeed;
+        if (leftPressed) dx -= playerSpeed;
+        if (rightPressed) dx += playerSpeed;
+
+        // Apply movement
+        double newX = character.getCenterX() + dx;
+        double newY = character.getCenterY() + dy;
+
+        character.setCenterX(newX);
+        character.setCenterY(newY);
     }
 
     private void moveEnemyTowardsPlayer() {
-        double playerX = character.getTranslateX() + character.getCenterX();
-        double playerY = character.getTranslateY() + character.getCenterY();
+        double playerX = character.getCenterX();
+        double playerY = character.getCenterY();
         double enemyX = enemy.getCenterX();
         double enemyY = enemy.getCenterY();
 
         double angle = Math.atan2(playerY - enemyY, playerX - enemyX);
-        double speed = 0.1; // You can adjust the speed of the enemy here
+        double speed = 1; // You can adjust the speed of the enemy here
         double newX = enemyX + Math.cos(angle) * speed;
         double newY = enemyY + Math.sin(angle) * speed;
 
@@ -129,10 +108,63 @@ public class HelloApplication extends Application {
         enemy.setCenterY(newY);
     }
 
-    private void updateCoordinatesLabel(double playerX, double playerY) {
-        long playerXLong = Math.round(playerX);
-        long playerYLong = Math.round(playerY);
-        coordinatesLabel.setText("Coordinates: (" + playerXLong + ", " + playerYLong + ")");
+    private void updateCoordinatesLabel() {
+        double playerX = character.getCenterX();
+        double playerY = character.getCenterY();
+        coordinatesLabel.setText("Coordinates: (" + Math.round(playerX) + ", " +
+                Math.round(playerY) + ")");
+    }
+
+    private void handleKeyPress(KeyCode code) {
+        switch (code) {
+            case Z:
+                upPressed = true;
+                break;
+            case S:
+                downPressed = true;
+                break;
+            case Q:
+                leftPressed = true;
+                break;
+            case D:
+                rightPressed = true;
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void handleKeyRelease(KeyCode code) {
+        switch (code) {
+            case Z:
+                upPressed = false;
+                break;
+            case S:
+                downPressed = false;
+                break;
+            case Q:
+                leftPressed = false;
+                break;
+            case D:
+                rightPressed = false;
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void centerCameraOnPlayer() {
+        double playerX = character.getCenterX();
+        double playerY = character.getCenterY();
+
+        // Calculate the position to center the camera on the player
+        double cameraOffsetX = playerX;
+        double cameraOffsetY = playerY;
+
+        // Translate the gamePane (your game area) by the calculated offset
+        Pane gamePane = (Pane) character.getParent();
+        gamePane.setTranslateX(-cameraOffsetX);
+        gamePane.setTranslateY(-cameraOffsetY);
     }
 
     public static void main(String[] args) {
