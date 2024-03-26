@@ -6,9 +6,9 @@ public abstract class Personnage implements IDeplacement{
     private String nom;
     private int pv;
     private int pvMax;
-    private Map<Stats, int> stats;
+    private Map<Stats, Integer> stats;
 
-    public Personnage(String nom, int pv, int pvMax, Map<Stats,int> stats) {
+    public Personnage(String nom) {
         this.nom = nom;
         this.pv = pv;
         this.pvMax = pvMax;

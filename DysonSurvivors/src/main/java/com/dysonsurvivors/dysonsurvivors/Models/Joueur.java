@@ -7,8 +7,8 @@ public class Joueur extends Personnage{
     private int XP;
     private int niveau;
 
-    public Joueur(String nom, int pv, int pvMax, Map<Stats, int> stats, Inventaire inventaire, int XP, int niveau) {
-        super(nom, pv, pvMax, stats);
+    public Joueur(String nom, Inventaire inventaire, int XP, int niveau) {
+        super(nom);
         this.inventaire = inventaire;
         this.XP = XP;
         this.niveau = niveau;
