@@ -13,6 +13,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import com.dysonsurvivors.dysonsurvivors.Models.Joueur;
+import com.dysonsurvivors.dysonsurvivors.Models.Monstre;
+import com.dysonsurvivors.dysonsurvivors.Models.Factory.FMonstre;
+
 public class HelloApplication extends Application {
 
     private static final int CHARACTER_RADIUS = 20;
@@ -21,31 +25,54 @@ public class HelloApplication extends Application {
     private static final int GAME_HEIGHT = 600;
     private Circle character;
     private Circle enemy;
+    private Monstre enemy2;
     private Label coordinatesLabel;
     private boolean upPressed = false;
     private boolean downPressed = false;
     private boolean leftPressed = false;
     private boolean rightPressed = false;
     private double playerSpeed = 3;
+    private Monstre[] listeMonstre;
+    private Joueur joueur;
+
 
     @Override
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("game.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
-
+        scene.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.setTitle("Game");
 
-        character = (Circle) loader.getNamespace().get("character");
+        /*character = (Circle) loader.getNamespace().get("character");*/
         coordinatesLabel = (Label) loader.getNamespace().get("coordinatesLabel");
+
+        // Creation du joueur
+        joueur = new Joueur("Joueur", 100, 100);
+        joueur.getHitbox().setStyle("-fx-fill: blue;");
+        joueur.getHitbox().relocate(GAME_WIDTH / 2, GAME_HEIGHT / 2);
+        Pane gamePane = (Pane) root.lookup("#gamePane");
+        gamePane.getChildren().add(joueur.getHitbox());
 
         enemy = new Circle(ENEMY_RADIUS);
         enemy.setStyle("-fx-fill: red;");
         enemy.relocate(GAME_WIDTH / 2, GAME_HEIGHT / 2);
 
-        Pane gamePane = (Pane) root.lookup("#gamePane");
-        gamePane.getChildren().add(enemy);
+        FMonstre monstreFactory = new FMonstre();
+
+        //liste de monstre
+        listeMonstre = new Monstre[60];
+
+        //boucle qui fait des monstres et les ajoute a une liste de monstres:
+        for (int i = 0; i < 10; i++) {
+            Monstre monstre = monstreFactory.creerMonstre(1);
+            monstre.getHitbox().setStyle("-fx-fill: yellow;");
+            monstre.getHitbox().relocate(GAME_WIDTH / 2, GAME_HEIGHT / 2);
+            /*Pane gamePane = (Pane) root.lookup("#gamePane");*/
+            gamePane.getChildren().add(monstre.getHitbox());
+            listeMonstre[i] = monstre; 
+        }
 
         // Event handlers for key presses and releases
         scene.setOnKeyPressed(event -> handleKeyPress(event.getCode()));
@@ -68,49 +95,21 @@ public class HelloApplication extends Application {
     }
 
     private void update() {
-        // Move the player
-        moveCharacter();
-        // Move enemy towards the player
-        moveEnemyTowardsPlayer();
-        // Update coordinates label
+        // Deplacement du joueur
+        joueur.seDeplacer(upPressed, downPressed, leftPressed, rightPressed);
+        // Met a jour les coordonnees du joueur
         updateCoordinatesLabel();
-        // Center camera on player
+        // Centre la camera sur le joueur
         centerCameraOnPlayer();
-    }
-
-    private void moveCharacter() {
-        double dx = 0, dy = 0;
-        if (upPressed) dy -= playerSpeed;
-        if (downPressed) dy += playerSpeed;
-        if (leftPressed) dx -= playerSpeed;
-        if (rightPressed) dx += playerSpeed;
-
-        // Apply movement
-        double newX = character.getCenterX() + dx;
-        double newY = character.getCenterY() + dy;
-
-        character.setCenterX(newX);
-        character.setCenterY(newY);
-    }
-
-    private void moveEnemyTowardsPlayer() {
-        double playerX = character.getCenterX();
-        double playerY = character.getCenterY();
-        double enemyX = enemy.getCenterX();
-        double enemyY = enemy.getCenterY();
-
-        double angle = Math.atan2(playerY - enemyY, playerX - enemyX);
-        double speed = 1; // You can adjust the speed of the enemy here
-        double newX = enemyX + Math.cos(angle) * speed;
-        double newY = enemyY + Math.sin(angle) * speed;
-
-        enemy.setCenterX(newX);
-        enemy.setCenterY(newY);
+        // Fait se deplacer les monstres de la liste
+        for (int i = 0; i < 10; i++) {
+            listeMonstre[i].seDeplacer(joueur, listeMonstre[i]);
+        }
     }
 
     private void updateCoordinatesLabel() {
-        double playerX = character.getCenterX();
-        double playerY = character.getCenterY();
+        double playerX = joueur.getHitbox().getCenterX();
+        double playerY = joueur.getHitbox().getCenterY();
         coordinatesLabel.setText("Coordinates: (" + Math.round(playerX) + ", " +
                 Math.round(playerY) + ")");
     }
@@ -154,15 +153,15 @@ public class HelloApplication extends Application {
     }
 
     private void centerCameraOnPlayer() {
-        double playerX = character.getCenterX();
-        double playerY = character.getCenterY();
+        double playerX = joueur.getHitbox().getCenterX();
+        double playerY = joueur.getHitbox().getCenterY();
 
         // Calculate the position to center the camera on the player
         double cameraOffsetX = playerX;
         double cameraOffsetY = playerY;
 
         // Translate the gamePane (your game area) by the calculated offset
-        Pane gamePane = (Pane) character.getParent();
+        Pane gamePane = (Pane) joueur.getHitbox().getParent();
         gamePane.setTranslateX(-cameraOffsetX);
         gamePane.setTranslateY(-cameraOffsetY);
     }
