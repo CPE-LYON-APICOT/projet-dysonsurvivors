@@ -21,17 +21,15 @@ public class HelloApplication extends Application {
 
     private static final int CHARACTER_RADIUS = 20;
     private static final int ENEMY_RADIUS = 15;
-    private static final int GAME_WIDTH = 800;
+    private static final int GAME_WIDTH = 1024;
     private static final int GAME_HEIGHT = 600;
     private Circle character;
     private Circle enemy;
-    private Monstre enemy2;
     private Label coordinatesLabel;
     private boolean upPressed = false;
     private boolean downPressed = false;
     private boolean leftPressed = false;
     private boolean rightPressed = false;
-    private double playerSpeed = 3;
     private Monstre[] listeMonstre;
     private Joueur joueur;
 
@@ -51,13 +49,14 @@ public class HelloApplication extends Application {
         // Creation du joueur
         joueur = new Joueur("Joueur", 100, 100);
         joueur.getHitbox().setStyle("-fx-fill: blue;");
-        joueur.getHitbox().relocate(GAME_WIDTH / 2, GAME_HEIGHT / 2);
+        joueur.getHitbox().setCenterX(GAME_WIDTH / 2);
+        joueur.getHitbox().setCenterY(GAME_HEIGHT / 2);
         Pane gamePane = (Pane) root.lookup("#gamePane");
         gamePane.getChildren().add(joueur.getHitbox());
 
-        enemy = new Circle(ENEMY_RADIUS);
+/*        enemy = new Circle(ENEMY_RADIUS);
         enemy.setStyle("-fx-fill: red;");
-        enemy.relocate(GAME_WIDTH / 2, GAME_HEIGHT / 2);
+        enemy.relocate(GAME_WIDTH / 2, GAME_HEIGHT / 2);*/
 
         FMonstre monstreFactory = new FMonstre();
 
@@ -69,7 +68,9 @@ public class HelloApplication extends Application {
             int niveauMonstre = (int) (Math.random() * 3) + 1;
             Monstre monstre = monstreFactory.creerMonstre(niveauMonstre);
             monstre.getHitbox().setStyle("-fx-fill: red;");
-            monstre.getHitbox().relocate(GAME_WIDTH / 2, GAME_HEIGHT / 2);
+            // fais apparaitre les monstres a des positions aleatoires
+            monstre.getHitbox().setCenterX((int) (Math.random() * GAME_WIDTH));
+            monstre.getHitbox().setCenterY((int) (Math.random() * GAME_HEIGHT));
             /*Pane gamePane = (Pane) root.lookup("#gamePane");*/
             gamePane.getChildren().add(monstre.getHitbox());
             listeMonstre[i] = monstre; 
@@ -158,8 +159,8 @@ public class HelloApplication extends Application {
         double playerY = joueur.getHitbox().getCenterY();
 
         // Calculate the position to center the camera on the player
-        double cameraOffsetX = playerX;
-        double cameraOffsetY = playerY;
+        double cameraOffsetX = playerX - GAME_WIDTH / 2;
+        double cameraOffsetY = playerY - GAME_HEIGHT / 2;
 
         // Translate the gamePane (your game area) by the calculated offset
         Pane gamePane = (Pane) joueur.getHitbox().getParent();
