@@ -21,6 +21,6 @@ public class SCourir implements IDeplacementMonstre{
         monstre.getHitbox().setCenterX(newX);
         monstre.getHitbox().setCenterY(newY);
 
-        System.out.println("Monstre Court");
+        /*System.out.println("Monstre Court");*/
     }
 }

@@ -66,8 +66,9 @@ public class HelloApplication extends Application {
 
         //boucle qui fait des monstres et les ajoute a une liste de monstres:
         for (int i = 0; i < 10; i++) {
-            Monstre monstre = monstreFactory.creerMonstre(1);
-            monstre.getHitbox().setStyle("-fx-fill: yellow;");
+            int niveauMonstre = (int) (Math.random() * 3) + 1;
+            Monstre monstre = monstreFactory.creerMonstre(niveauMonstre);
+            monstre.getHitbox().setStyle("-fx-fill: red;");
             monstre.getHitbox().relocate(GAME_WIDTH / 2, GAME_HEIGHT / 2);
             /*Pane gamePane = (Pane) root.lookup("#gamePane");*/
             gamePane.getChildren().add(monstre.getHitbox());
@@ -103,7 +104,7 @@ public class HelloApplication extends Application {
         centerCameraOnPlayer();
         // Fait se deplacer les monstres de la liste
         for (int i = 0; i < 10; i++) {
-            listeMonstre[i].seDeplacer(joueur, listeMonstre[i]);
+            listeMonstre[i].seDeplacer(joueur);
         }
     }
 

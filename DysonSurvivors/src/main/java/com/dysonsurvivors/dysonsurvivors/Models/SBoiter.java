@@ -20,6 +20,8 @@ public class SBoiter implements IDeplacementMonstre {
         monstre.getHitbox().setCenterX(newX);
         monstre.getHitbox().setCenterY(newY);
 
+/*
         System.out.println("Monstre Boite");
+*/
     }
 }

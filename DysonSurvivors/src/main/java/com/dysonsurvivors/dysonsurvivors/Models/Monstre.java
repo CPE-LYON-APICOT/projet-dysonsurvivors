@@ -22,7 +22,7 @@ public class Monstre extends Personnage{
         System.out.println("Monstre attaque");
     }
 
-    public void seDeplacer(Joueur joueur, Monstre monstre) {
-        deplacement.seDeplacer(joueur,monstre);
+    public void seDeplacer(Joueur joueur) {
+        deplacement.seDeplacer(joueur,this);
     }
 }

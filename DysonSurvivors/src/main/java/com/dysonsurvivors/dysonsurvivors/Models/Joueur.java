@@ -20,7 +20,7 @@ public class Joueur extends Personnage{
     }
 
     public void seDeplacer(boolean upPressed, boolean downPressed, boolean leftPressed, boolean rightPressed) {
-        System.out.println("Joueur marche");
+        // System.out.println("Joueur marche");
         double dx = 0, dy = 0;
         if (upPressed) dy -= 1;
         if (downPressed) dy += 1;
