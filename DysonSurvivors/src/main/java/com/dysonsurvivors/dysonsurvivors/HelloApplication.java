@@ -30,7 +30,8 @@ public class HelloApplication extends Application {
     private boolean downPressed = false;
     private boolean leftPressed = false;
     private boolean rightPressed = false;
-    private Monstre[] listeMonstre;
+    private Monstre[] listeMonstres;
+    private int nbMonstres;
     private Joueur joueur;
 
 
@@ -48,9 +49,9 @@ public class HelloApplication extends Application {
 
         // Creation du joueur
         joueur = new Joueur("Joueur", 100, 100);
-        joueur.getHitbox().setStyle("-fx-fill: blue;");
-        joueur.getHitbox().setCenterX(GAME_WIDTH / 2);
-        joueur.getHitbox().setCenterY(GAME_HEIGHT / 2);
+        /*joueur.getHitbox().setStyle("-fx-fill: blue;");*/
+        joueur.getHitbox().setLayoutX(GAME_WIDTH / 2);
+        joueur.getHitbox().setLayoutY(GAME_HEIGHT / 2);
         Pane gamePane = (Pane) root.lookup("#gamePane");
         gamePane.getChildren().add(joueur.getHitbox());
 
@@ -61,19 +62,20 @@ public class HelloApplication extends Application {
         FMonstre monstreFactory = new FMonstre();
 
         //liste de monstre
-        listeMonstre = new Monstre[60];
+        nbMonstres = 10;
+        listeMonstres = new Monstre[nbMonstres];
 
         //boucle qui fait des monstres et les ajoute a une liste de monstres:
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < nbMonstres; i++) {
             int niveauMonstre = (int) (Math.random() * 3) + 1;
             Monstre monstre = monstreFactory.creerMonstre(niveauMonstre);
-            monstre.getHitbox().setStyle("-fx-fill: red;");
+            /*monstre.getHitbox().setStyle("-fx-fill: red;");*/
             // fais apparaitre les monstres a des positions aleatoires
-            monstre.getHitbox().setCenterX((int) (Math.random() * GAME_WIDTH));
-            monstre.getHitbox().setCenterY((int) (Math.random() * GAME_HEIGHT));
-            /*Pane gamePane = (Pane) root.lookup("#gamePane");*/
+            monstre.getHitbox().setLayoutX((int) (Math.random() * GAME_WIDTH));
+            monstre.getHitbox().setLayoutY((int) (Math.random() * GAME_HEIGHT));
+          /*  Pane gamePane = (Pane) root.lookup("#gamePane");*/
             gamePane.getChildren().add(monstre.getHitbox());
-            listeMonstre[i] = monstre; 
+            listeMonstres[i] = monstre;
         }
 
         // Event handlers for key presses and releases
@@ -98,20 +100,21 @@ public class HelloApplication extends Application {
 
     private void update() {
         // Deplacement du joueur
-        joueur.seDeplacer(upPressed, downPressed, leftPressed, rightPressed);
+        joueur.seDeplacer();
         // Met a jour les coordonnees du joueur
         updateCoordinatesLabel();
         // Centre la camera sur le joueur
         centerCameraOnPlayer();
         // Fait se deplacer les monstres de la liste
-        for (int i = 0; i < 10; i++) {
-            listeMonstre[i].seDeplacer(joueur);
+        for (int i = 0; i < nbMonstres; i++) {
+            /*System.out.println("Monstre " + i);*/
+            listeMonstres[i].seDeplacer(joueur);
         }
     }
 
     private void updateCoordinatesLabel() {
-        double playerX = joueur.getHitbox().getCenterX();
-        double playerY = joueur.getHitbox().getCenterY();
+        double playerX = joueur.getHitbox().getLayoutX() + joueur.getHitbox().getWidth()/2;
+        double playerY = joueur.getHitbox().getLayoutY() + joueur.getHitbox().getHeight()/2;
         coordinatesLabel.setText("Coordinates: (" + Math.round(playerX) + ", " +
                 Math.round(playerY) + ")");
     }
@@ -119,16 +122,16 @@ public class HelloApplication extends Application {
     private void handleKeyPress(KeyCode code) {
         switch (code) {
             case Z:
-                upPressed = true;
+                joueur.setUpPressed(true);
                 break;
             case S:
-                downPressed = true;
+                joueur.setDownPressed(true);
                 break;
             case Q:
-                leftPressed = true;
+                joueur.setLeftPressed(true);
                 break;
             case D:
-                rightPressed = true;
+                joueur.setRightPressed(true);
                 break;
             default:
                 break;
@@ -138,16 +141,16 @@ public class HelloApplication extends Application {
     private void handleKeyRelease(KeyCode code) {
         switch (code) {
             case Z:
-                upPressed = false;
+                joueur.setUpPressed(false);
                 break;
             case S:
-                downPressed = false;
+                joueur.setDownPressed(false);
                 break;
             case Q:
-                leftPressed = false;
+                joueur.setLeftPressed(false);
                 break;
             case D:
-                rightPressed = false;
+                joueur.setRightPressed(false);
                 break;
             default:
                 break;
@@ -155,8 +158,8 @@ public class HelloApplication extends Application {
     }
 
     private void centerCameraOnPlayer() {
-        double playerX = joueur.getHitbox().getCenterX();
-        double playerY = joueur.getHitbox().getCenterY();
+        double playerX = joueur.getHitbox().getLayoutX();
+        double playerY = joueur.getHitbox().getLayoutY();
 
         // Calculate the position to center the camera on the player
         double cameraOffsetX = playerX - GAME_WIDTH / 2;

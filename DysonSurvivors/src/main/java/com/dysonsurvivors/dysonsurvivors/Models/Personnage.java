@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.EnumMap;
 
 
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 
 public abstract class Personnage{
@@ -12,10 +13,10 @@ public abstract class Personnage{
     protected int pvMax;
     protected Map<Stats, Integer> stats;
 
-    protected Circle hitbox;
+    protected Pane hitbox;
 
     public Personnage(String nom, int pv, int pvMax) {
-        this.hitbox = new Circle(20);
+        /*this.hitbox = new Circle(20);*/
         this.nom = nom;
         this.pv = pv;
         this.pvMax = pvMax;
@@ -33,7 +34,7 @@ public abstract class Personnage{
         System.out.println("Personnage ne possède pas de déplacement");
     }
 
-    public Circle getHitbox() {
+    public Pane getHitbox() {
         return hitbox;
     }
 }

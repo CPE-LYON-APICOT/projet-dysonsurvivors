@@ -3,7 +3,6 @@ package com.dysonsurvivors.dysonsurvivors.Models.Factory;
 import com.dysonsurvivors.dysonsurvivors.Models.*;
 
 public class FMonstre {
-
     public Monstre creerMonstre(int niveau) {
         String nom = "Monstre";
         int pv = 10 * niveau;
