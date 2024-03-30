@@ -48,7 +48,7 @@ public class Joueur extends Personnage{
         this.rightPressed = rightPressed;
     }
 
-    private void attaquer() {
+    public void attaquer() {
         System.out.println("Joueur attaque");
     }
 
