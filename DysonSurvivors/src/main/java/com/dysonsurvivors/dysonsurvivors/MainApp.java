@@ -1,5 +1,12 @@
 package com.dysonsurvivors.dysonsurvivors;
 
+import javafx.application.Application;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+import java.io.File;
+
 import com.dysonsurvivors.dysonsurvivors.Controllers.JoueurController;
 import com.dysonsurvivors.dysonsurvivors.Controllers.MonstreController;
 import javafx.animation.AnimationTimer;
@@ -28,6 +35,33 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
+        /* Musique */
+        String musicFile = "src/main/resources/com/dysonsurvivors/dysonsurvivors/music/pdm-soundtrack.mp3";
+        // Créer un objet Media avec le fichier audio
+        Media sound = new Media(new File(musicFile).toURI().toString());
+        // Créer un lecteur audio
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        // Configurer le lecteur audio pour qu'il joue en boucle
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        // Démarrer la lecture de la musique de fond
+        mediaPlayer.play();
+        mediaPlayer.setVolume(0.5);
+
+        /*// Facultatif : mettre en pause la musique après un certain temps
+        mediaPlayer.setOnPlaying(() -> {
+            new java.util.Timer().schedule(
+                    new java.util.TimerTask() {
+                        @Override
+                        public void run() {
+                            mediaPlayer.pause();
+                        }
+                    },
+                    30000 // Durée en millisecondes (30 secondes)
+            );
+        });
+
+        primaryStage.show();*/
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("game.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
