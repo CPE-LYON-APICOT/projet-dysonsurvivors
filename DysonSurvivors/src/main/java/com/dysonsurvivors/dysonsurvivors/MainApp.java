@@ -45,9 +45,8 @@ public class MainApp extends Application {
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         // Démarrer la lecture de la musique de fond
         mediaPlayer.play();
-        mediaPlayer.setVolume(0.5);
 
-        /*// Facultatif : mettre en pause la musique après un certain temps
+        // Facultatif : mettre en pause la musique après un certain temps
         mediaPlayer.setOnPlaying(() -> {
             new java.util.Timer().schedule(
                     new java.util.TimerTask() {
@@ -60,7 +59,13 @@ public class MainApp extends Application {
             );
         });
 
-        primaryStage.show();*/
+        // Ajouter un gestionnaire d'événements pour fermer la fenêtre
+        primaryStage.setOnCloseRequest(event -> {
+            // Arrêter l'ensemble de l'application JavaFX
+            System.exit(0);
+        });
+
+        primaryStage.show();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("game.fxml"));
         Parent root = loader.load();
