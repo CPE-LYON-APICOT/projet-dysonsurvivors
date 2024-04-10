@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "MainApp",
+            "request": "launch",
+            "mainClass": "com.dysonsurvivors.dysonsurvivors/com.dysonsurvivors.dysonsurvivors.MainApp",
+            "projectName": "DysonSurvivors"
+        },
+        {
+            "type": "java",
             "name": "HelloApplication",
             "request": "launch",
             "mainClass": "com.dysonsurvivors.dysonsurvivors/com.dysonsurvivors.dysonsurvivors.HelloApplication",

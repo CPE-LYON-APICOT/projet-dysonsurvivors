@@ -47,17 +47,17 @@ public class MainApp extends Application {
         mediaPlayer.play();
 
         // Facultatif : mettre en pause la musique après un certain temps
-        mediaPlayer.setOnPlaying(() -> {
-            new java.util.Timer().schedule(
-                    new java.util.TimerTask() {
-                        @Override
-                        public void run() {
-                            mediaPlayer.pause();
-                        }
-                    },
-                    30000 // Durée en millisecondes (30 secondes)
-            );
-        });
+        // mediaPlayer.setOnPlaying(() -> {
+        //     new java.util.Timer().schedule(
+        //             new java.util.TimerTask() {
+        //                 @Override
+        //                 public void run() {
+        //                     mediaPlayer.pause();
+        //                 }
+        //             },
+        //             30000 // Durée en millisecondes (30 secondes)
+        //     );
+        // });
 
         // Ajouter un gestionnaire d'événements pour fermer la fenêtre
         primaryStage.setOnCloseRequest(event -> {
