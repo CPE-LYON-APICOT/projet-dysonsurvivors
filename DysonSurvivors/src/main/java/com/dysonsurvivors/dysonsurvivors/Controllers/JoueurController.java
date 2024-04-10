@@ -7,9 +7,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
-import com.dysonsurvivors.dysonsurvivors.Models.IhandleKeyRelease;
 
-public class JoueurController implements IhandleKeyRelease{
+public class JoueurController{
     private Joueur joueur;
     private int GAME_WIDTH;
     private int GAME_HEIGHT;
