@@ -1,9 +1,13 @@
 package com.dysonsurvivors.dysonsurvivors.Controllers;
 
+import com.dysonsurvivors.dysonsurvivors.Models.IhandleKeyAction;
 import com.dysonsurvivors.dysonsurvivors.Models.Joueur;
 import com.dysonsurvivors.dysonsurvivors.Models.JoueurSingleton;
-import javafx.scene.control.Label;
+import com.dysonsurvivors.dysonsurvivors.Models.SAzerty;
+
 import javafx.scene.input.KeyCode;
+
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
 
@@ -12,11 +16,13 @@ public class JoueurController{
     private int GAME_WIDTH;
     private int GAME_HEIGHT;
     private Pane gamePane;
+    private IhandleKeyAction handleKeyAction;
 
     public JoueurController(int GAME_WIDTH, int GAME_HEIGHT, Pane gamePane) {
         this.GAME_WIDTH = GAME_WIDTH;
         this.GAME_HEIGHT = GAME_HEIGHT;
         this.gamePane = gamePane;
+        this.handleKeyAction = new SAzerty();
     }
 
     public Joueur CreateJoueur() {
@@ -75,40 +81,14 @@ public class JoueurController{
     }
 
     public void handleKeyPress(KeyCode code) {
-        switch (code) {
-            case Z:
-                joueur.setUpPressed(true);
-                break;
-            case S:
-                joueur.setDownPressed(true);
-                break;
-            case Q:
-                joueur.setLeftPressed(true);
-                break;
-            case D:
-                joueur.setRightPressed(true);
-                break;
-            default:
-                break;
-        }
+        this.handleKeyAction.handleKeyPress(code);
     }
 
     public void handleKeyRelease(KeyCode code) {
-        switch (code) {
-            case Z:
-                joueur.setUpPressed(false);
-                break;
-            case S:
-                joueur.setDownPressed(false);
-                break;
-            case Q:
-                joueur.setLeftPressed(false);
-                break;
-            case D:
-                joueur.setRightPressed(false);
-                break;
-            default:
-                break;
-        }
+        this.handleKeyAction.handleKeyRelease(code);
+    }
+
+    public void setHandleKeyAction(IhandleKeyAction handleKeyAction) {
+        this.handleKeyAction = handleKeyAction;
     }
 }
