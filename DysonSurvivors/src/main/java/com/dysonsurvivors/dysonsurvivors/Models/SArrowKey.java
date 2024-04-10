@@ -2,21 +2,21 @@ package com.dysonsurvivors.dysonsurvivors.Models;
 
 import javafx.scene.input.KeyCode;
 
-public class SQwerty implements IhandleKeyAction{
+public class SArrowKey implements IhandleKeyAction{
     
     public void handleKeyPress(KeyCode code) {
         Joueur joueur = JoueurSingleton.getInstance();
         switch (code) {
-            case W:
+            case UP:
                 joueur.setUpPressed(true);
                 break;
-            case S:
+            case DOWN:
                 joueur.setDownPressed(true);
                 break;
-            case A:
+            case LEFT:
                 joueur.setLeftPressed(true);
                 break;
-            case D:
+            case RIGHT:
                 joueur.setRightPressed(true);
                 break;
             default:
@@ -27,16 +27,16 @@ public class SQwerty implements IhandleKeyAction{
     public void handleKeyRelease(KeyCode code){
         Joueur joueur = JoueurSingleton.getInstance();
         switch (code) {
-            case W:
+            case UP:
                 joueur.setUpPressed(false);
                 break;
-            case S:
+            case DOWN:
                 joueur.setDownPressed(false);
                 break;
-            case A:
+            case LEFT:
                 joueur.setLeftPressed(false);
                 break;
-            case D:
+            case RIGHT:
                 joueur.setRightPressed(false);
                 break;
             default:

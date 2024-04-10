@@ -9,6 +9,8 @@ import java.io.File;
 
 import com.dysonsurvivors.dysonsurvivors.Controllers.JoueurController;
 import com.dysonsurvivors.dysonsurvivors.Controllers.MonstreController;
+import com.dysonsurvivors.dysonsurvivors.Controllers.ParamController;
+
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -77,10 +79,12 @@ public class MainApp extends Application {
 
         coordinatesLabel = (Label) loader.getNamespace().get("coordinatesLabel");
 
+
         // Creation du joueur
         joueurController = new JoueurController(GAME_WIDTH, GAME_HEIGHT, gamePane);
         joueur = joueurController.CreateJoueur();
 
+        ParamController paramController = new ParamController(GAME_WIDTH, GAME_HEIGHT, gamePane, joueurController);
         // Creation des monstres
         nbMonstresMax = 10;
         listeMonstres = new Monstre[nbMonstresMax];
@@ -88,20 +92,28 @@ public class MainApp extends Application {
         monstreController.creerMonstre(5);
 
         // Event handlers for key presses and releases
-        scene.setOnKeyPressed(event -> joueurController.handleKeyPress(event.getCode()));
-        scene.setOnKeyReleased(event -> joueurController.handleKeyRelease(event.getCode()));
+        scene.setOnKeyPressed(event -> {
+            joueurController.handleKeyPress(event.getCode());
+            paramController.handleKeyPress(event.getCode());
+        });
+        
+        scene.setOnKeyReleased(event -> {
+            joueurController.handleKeyRelease(event.getCode());
+        });
+        
 
         // Start the game loop
-        startGameLoop();
-
+        startGameLoop(paramController);
         primaryStage.show();
     }
 
-    private void startGameLoop() {
+    private void startGameLoop(ParamController paramController) {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
+                if (!paramController.getIsActive()) {
                 update();
+                }
             }
         };
         timer.start();
