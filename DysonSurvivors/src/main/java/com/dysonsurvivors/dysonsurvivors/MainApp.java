@@ -1,14 +1,12 @@
 package com.dysonsurvivors.dysonsurvivors;
 
-import javafx.application.Application;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.stage.Stage;
-import javafx.util.Duration;
-import java.io.File;
-
+import com.dysonsurvivors.dysonsurvivors.Controllers.InventaireController;
 import com.dysonsurvivors.dysonsurvivors.Controllers.JoueurController;
 import com.dysonsurvivors.dysonsurvivors.Controllers.MonstreController;
+import com.dysonsurvivors.dysonsurvivors.Models.Inventaire.Equipements.Armes.ChampignonHallucinogene;
+import com.dysonsurvivors.dysonsurvivors.Models.Joueur;
+import com.dysonsurvivors.dysonsurvivors.Models.Monstre;
+import com.dysonsurvivors.dysonsurvivors.Models.Objet;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -16,12 +14,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
-
-import com.dysonsurvivors.dysonsurvivors.Models.Joueur;
-import com.dysonsurvivors.dysonsurvivors.Models.Monstre;
 
 public class MainApp extends Application {
     private static int GAME_WIDTH = 1024;
@@ -32,6 +30,7 @@ public class MainApp extends Application {
     private int nbMonstresMax;
     private JoueurController joueurController;
     private Joueur joueur;
+    private InventaireController inventaireController;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -65,7 +64,6 @@ public class MainApp extends Application {
             System.exit(0);
         });
 
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("game.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -80,6 +78,12 @@ public class MainApp extends Application {
         // Creation du joueur
         joueurController = new JoueurController(GAME_WIDTH, GAME_HEIGHT, gamePane);
         joueur = joueurController.CreateJoueur();
+
+        // Création d'un objet pour l'ajouter à l'inventaire*
+        Objet objet = new ChampignonHallucinogene("Champi Champlax", "Oeeeeee!", "1.png");
+        joueur.getInventaire().ajouterObjet(objet);
+        inventaireController = new InventaireController(joueur.getInventaire(), gamePane);
+        inventaireController.afficherInventaire();
 
         // Creation des monstres
         nbMonstresMax = 10;

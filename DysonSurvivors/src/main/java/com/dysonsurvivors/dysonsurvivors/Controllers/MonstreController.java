@@ -1,9 +1,8 @@
 package com.dysonsurvivors.dysonsurvivors.Controllers;
 
-import javafx.scene.layout.Pane;
-
 import com.dysonsurvivors.dysonsurvivors.Models.Factory.FMonstre;
 import com.dysonsurvivors.dysonsurvivors.Models.Monstre;
+import javafx.scene.layout.Pane;
 
 public class MonstreController {
 

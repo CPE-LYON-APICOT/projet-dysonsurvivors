@@ -1,8 +1,6 @@
 package com.dysonsurvivors.dysonsurvivors.Models;
 
 import javafx.scene.input.KeyCode;
-import com.dysonsurvivors.dysonsurvivors.Models.Joueur;
-import com.dysonsurvivors.dysonsurvivors.Models.JoueurSingleton;
 
 public class SQwerty implements IhandleKeyAction{
     

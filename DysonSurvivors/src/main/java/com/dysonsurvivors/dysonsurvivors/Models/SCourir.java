@@ -1,7 +1,6 @@
 package com.dysonsurvivors.dysonsurvivors.Models;
 
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Circle;
 
 public class SCourir implements IDeplacementMonstre{
 

@@ -1,15 +1,14 @@
 package com.dysonsurvivors.dysonsurvivors.Models;
-import java.util.Map;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.beans.property.DoubleProperty;
-import javafx.scene.layout.Pane;
-import javafx.scene.shape.Circle;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+
 import java.util.Objects;
 
 public class Monstre extends Personnage{

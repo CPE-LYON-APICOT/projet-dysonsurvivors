@@ -2,9 +2,8 @@ package com.dysonsurvivors.dysonsurvivors.Controllers;
 
 import com.dysonsurvivors.dysonsurvivors.Models.Joueur;
 import com.dysonsurvivors.dysonsurvivors.Models.JoueurSingleton;
-import javafx.scene.input.KeyCode;
-
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 
 

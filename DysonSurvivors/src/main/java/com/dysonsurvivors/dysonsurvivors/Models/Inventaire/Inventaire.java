@@ -1,4 +1,6 @@
-package com.dysonsurvivors.dysonsurvivors.Models;
+package com.dysonsurvivors.dysonsurvivors.Models.Inventaire;
+
+import com.dysonsurvivors.dysonsurvivors.Models.Objet;
 
 public class Inventaire {
     private Objet objets[];
@@ -23,5 +25,9 @@ public class Inventaire {
                 break;
             }
         }
+    }
+
+    public Objet[] getObjets(){
+        return objets;
     }
 }

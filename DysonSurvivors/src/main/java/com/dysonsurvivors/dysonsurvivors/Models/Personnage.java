@@ -1,11 +1,9 @@
 package com.dysonsurvivors.dysonsurvivors.Models;
 
-import java.util.Map;
-import java.util.EnumMap;
-
-
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Circle;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 public abstract class Personnage{
     private String nom;

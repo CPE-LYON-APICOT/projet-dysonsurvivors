@@ -1,19 +1,20 @@
 package com.dysonsurvivors.dysonsurvivors.Models;
 
-import java.util.Objects;
-import java.util.Set;
+import com.dysonsurvivors.dysonsurvivors.Models.Inventaire.Inventaire;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.util.Duration;
 
+import java.util.Objects;
+
 public class Joueur extends Personnage{
-    private Set<Objet> inventaire;
+    private Inventaire inventaire;
     private int XP;
     private int niveau;
     private ImageView sprite;
@@ -41,6 +42,7 @@ public class Joueur extends Personnage{
         lifeBarMax.setFill(Color.BLACK);
         lifeBarCurrent.setFill(Color.RED);
         lifeBarBorder.setFill(Color.GOLD);
+        inventaire = new Inventaire();
     }
 
     // Méthodes pour mettre à jour l'état des touches de déplacement
@@ -184,5 +186,9 @@ public class Joueur extends Personnage{
 
     public void setLifeBarBorder(Rectangle lifeBarBorder) {
         this.lifeBarCurrent = lifeBarBorder;
+    }
+
+    public Inventaire getInventaire() {
+        return inventaire;
     }
 }
