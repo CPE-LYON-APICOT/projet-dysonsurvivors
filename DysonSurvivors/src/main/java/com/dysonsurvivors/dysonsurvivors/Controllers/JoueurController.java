@@ -1,6 +1,7 @@
 package com.dysonsurvivors.dysonsurvivors.Controllers;
 
 import com.dysonsurvivors.dysonsurvivors.Models.Joueur;
+import com.dysonsurvivors.dysonsurvivors.Models.JoueurSingleton;
 import javafx.scene.input.KeyCode;
 
 import javafx.scene.control.Label;
@@ -18,8 +19,8 @@ public class JoueurController {
         this.gamePane = gamePane;
     }
 
-    public Joueur CreateJoueur(String nom, int pv, int pvMax) {
-        joueur =  new Joueur(nom, pv, pvMax);
+    public Joueur CreateJoueur() {
+        joueur = JoueurSingleton.getInstance();
         joueur.getHitbox().setLayoutX(GAME_WIDTH / 2);
         joueur.getHitbox().setLayoutY(GAME_HEIGHT / 2);
         gamePane.getChildren().add(joueur.getHitbox());

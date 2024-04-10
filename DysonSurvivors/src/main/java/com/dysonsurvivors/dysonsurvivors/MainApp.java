@@ -80,7 +80,7 @@ public class MainApp extends Application {
 
         // Creation du joueur
         joueurController = new JoueurController(GAME_WIDTH, GAME_HEIGHT, gamePane);
-        joueur = joueurController.CreateJoueur("Joueur", 100, 100);
+        joueur = joueurController.CreateJoueur();
 
         // Creation des monstres
         nbMonstresMax = 10;
