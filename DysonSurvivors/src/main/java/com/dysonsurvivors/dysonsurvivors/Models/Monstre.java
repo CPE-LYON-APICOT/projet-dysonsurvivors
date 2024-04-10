@@ -22,8 +22,8 @@ public class Monstre extends Personnage{
     private int oldX = 0;
     private int oldY = 0;
 
-    public Monstre(String nom, int pv, int pvMax, IDeplacementMonstre deplacement) {
-        super(nom, pv, pvMax);
+    public Monstre(String nom, int pvMax, IDeplacementMonstre deplacement) {
+        super(nom, pvMax);
         this.deplacement = deplacement;
         chargerSprite(); // Charger la sprite du monstre
         initAnimationTimeline();

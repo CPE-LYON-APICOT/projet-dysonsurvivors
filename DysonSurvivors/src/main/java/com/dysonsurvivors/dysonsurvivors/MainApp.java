@@ -65,7 +65,6 @@ public class MainApp extends Application {
             System.exit(0);
         });
 
-        primaryStage.show();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("game.fxml"));
         Parent root = loader.load();
@@ -80,16 +79,13 @@ public class MainApp extends Application {
 
         // Creation du joueur
         joueurController = new JoueurController(GAME_WIDTH, GAME_HEIGHT, gamePane);
-        joueur = joueurController.CreateJoueur("Joueur", 100, 100);
+        joueur = joueurController.CreateJoueur("Joueur", 100);
 
         // Creation des monstres
         nbMonstresMax = 10;
         listeMonstres = new Monstre[nbMonstresMax];
         monstreController = new MonstreController(listeMonstres, GAME_WIDTH, GAME_HEIGHT, gamePane);
         monstreController.creerMonstre(5);
-        for (Monstre monstre : listeMonstres) {
-            System.out.println(monstre);
-        }
 
         // Event handlers for key presses and releases
         scene.setOnKeyPressed(event -> joueurController.handleKeyPress(event.getCode()));
@@ -116,6 +112,7 @@ public class MainApp extends Application {
         joueurController.seDeplacer();
         // Met a jour les coordonnees du joueur
         joueurController.updateCoordinatesLabel(coordinatesLabel);
+        joueurController.updateCoordinatesLife();
         // Centre la camera sur le joueur
         joueurController.centerCameraOnPlayer();
         // Fait se deplacer les monstres de la liste

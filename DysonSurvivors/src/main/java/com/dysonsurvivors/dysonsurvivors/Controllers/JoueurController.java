@@ -6,7 +6,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
-public class JoueurController {
+import com.dysonsurvivors.dysonsurvivors.Models.IhandleKeyRelease;
+
+public class JoueurController implements IhandleKeyRelease{
     private Joueur joueur;
     private int GAME_WIDTH;
     private int GAME_HEIGHT;
@@ -18,11 +20,15 @@ public class JoueurController {
         this.gamePane = gamePane;
     }
 
-    public Joueur CreateJoueur(String nom, int pv, int pvMax) {
-        joueur =  new Joueur(nom, pv, pvMax);
+    public Joueur CreateJoueur(String nom, int pvMax) {
+        joueur =  new Joueur(nom, pvMax);
         joueur.getHitbox().setLayoutX(GAME_WIDTH / 2);
         joueur.getHitbox().setLayoutY(GAME_HEIGHT / 2);
         gamePane.getChildren().add(joueur.getHitbox());
+        gamePane.getChildren().add(joueur.getLifeBarBorder());
+        gamePane.getChildren().add(joueur.getLifeBarMax());
+        gamePane.getChildren().add(joueur.getLifeBarCurrent());
+        
         return joueur;
     }
     public Joueur getJoueur() {
@@ -42,6 +48,17 @@ public class JoueurController {
         double playerY = joueur.getHitbox().getLayoutY() + joueur.getHitbox().getHeight()/2;
         coordinatesLabel.setText("Coordinates: (" + Math.round(playerX) + ", " +
                 Math.round(playerY) + ")");
+    }
+
+    public void updateCoordinatesLife() {
+        double playerX = joueur.getHitbox().getLayoutX() + joueur.getHitbox().getWidth()/2;
+        double playerY = joueur.getHitbox().getLayoutY() + joueur.getHitbox().getHeight()/2;
+        joueur.getLifeBarMax().setLayoutY(playerY + joueur.getHitbox().getHeight()/2+5);
+        joueur.getLifeBarMax().setLayoutX(playerX - joueur.getLifeBarMax().getWidth()/2);
+        joueur.getLifeBarCurrent().setLayoutY(playerY + joueur.getHitbox().getHeight()/2+5);
+        joueur.getLifeBarCurrent().setLayoutX(playerX - joueur.getLifeBarMax().getWidth()/2);
+        joueur.getLifeBarBorder().setLayoutY(playerY + joueur.getHitbox().getHeight()/2+3);
+        joueur.getLifeBarBorder().setLayoutX(playerX - joueur.getLifeBarMax().getWidth()/2-2);
     }
 
     public void centerCameraOnPlayer() {

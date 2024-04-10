@@ -5,10 +5,9 @@ import com.dysonsurvivors.dysonsurvivors.Models.*;
 public class FMonstre {
     public Monstre creerMonstre(int niveau) {
         String nom = "Monstre";
-        int pv = 10 * niveau;
         int pvMax = 10 * niveau;
 
-        return new Monstre(nom, pv, pvMax, genererDeplacement());
+        return new Monstre(nom, pvMax, genererDeplacement());
     }
 
     private IDeplacementMonstre genererDeplacement() {

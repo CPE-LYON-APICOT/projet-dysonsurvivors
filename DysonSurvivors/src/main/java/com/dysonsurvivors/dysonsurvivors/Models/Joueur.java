@@ -6,6 +6,8 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
@@ -24,11 +26,21 @@ public class Joueur extends Personnage{
     private boolean downPressed = false;
     private boolean leftPressed = false;
     private boolean rightPressed = false;
+    private Rectangle lifeBarMax;
+    private Rectangle lifeBarCurrent;
+    private Rectangle lifeBarBorder;
 
-    public Joueur(String nom, int pv, int pvMax) {
-        super(nom, pv, pvMax);
+
+    public Joueur(String nom, int pvMax) {
+        super(nom, pvMax);
         chargerSprite();
         initAnimationTimeline();
+        lifeBarMax = new Rectangle(0, 0, pvMax/2, 3);
+        lifeBarCurrent = new Rectangle(0, 0, pv/2, 3);
+        lifeBarBorder = new Rectangle(0, 0, pv/2+4, 3+4);
+        lifeBarMax.setFill(Color.BLACK);
+        lifeBarCurrent.setFill(Color.RED);
+        lifeBarBorder.setFill(Color.GOLD);
     }
 
     // Méthodes pour mettre à jour l'état des touches de déplacement
@@ -148,5 +160,29 @@ public class Joueur extends Personnage{
     // Méthode pour changer la frame de l'animation
     private void changerFrameAnimation(int frameX, int frameY) {
         sprite.setViewport(new Rectangle2D(frameX * 64, frameY * 64, 64, 64));
+    }
+
+    public Rectangle getLifeBarMax() {
+        return lifeBarMax;
+    }
+
+    public Rectangle getLifeBarCurrent() {
+        return lifeBarCurrent;
+    }
+
+    public void setLifeBarCurrent(Rectangle lifeBarCurrent) {
+        this.lifeBarCurrent = lifeBarCurrent;
+    }
+
+    public void setLifeBarMax(Rectangle lifeBarMax) {
+        this.lifeBarMax = lifeBarMax;
+    }
+
+    public Rectangle getLifeBarBorder() {
+        return lifeBarBorder;
+    }
+
+    public void setLifeBarBorder(Rectangle lifeBarBorder) {
+        this.lifeBarCurrent = lifeBarBorder;
     }
 }

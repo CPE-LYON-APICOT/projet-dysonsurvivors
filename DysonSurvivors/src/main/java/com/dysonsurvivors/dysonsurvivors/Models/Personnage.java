@@ -15,11 +15,11 @@ public abstract class Personnage{
 
     protected Pane hitbox;
 
-    public Personnage(String nom, int pv, int pvMax) {
+    public Personnage(String nom, int pvMax) {
         /*this.hitbox = new Circle(20);*/
         this.nom = nom;
-        this.pv = pv;
         this.pvMax = pvMax;
+        this.pv = pvMax;
         this.stats = new EnumMap<>(Stats.class);
         initialiserCompetences();
     }
