@@ -41,6 +41,7 @@ public class Monstre extends Personnage{
 
     private void chargerSprite() {
         // Charger la sprite sheet
+        var toto = new Image(Objects.requireNonNull(getClass().getResourceAsStream("grenouille.png")));
         Image spriteSheet = new Image(Objects.requireNonNull(getClass().getResourceAsStream("ghost.png")));
 
         // Créer une ImageView pour afficher la sprite animée

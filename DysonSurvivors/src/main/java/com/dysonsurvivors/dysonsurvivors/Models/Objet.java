@@ -12,7 +12,7 @@ public abstract class Objet {
     public Objet(String nom, String description, String nomImage){
         this.nom = nom;
         this.description = description;
-        this.image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("grenouille.png")));
+        
     }
 
     public String getNom(){

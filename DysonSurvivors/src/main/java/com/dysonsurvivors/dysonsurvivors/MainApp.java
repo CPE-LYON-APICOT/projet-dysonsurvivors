@@ -99,9 +99,14 @@ public class MainApp extends Application {
         monstreController = new MonstreController(listeMonstres, GAME_WIDTH, GAME_HEIGHT, gamePane);
         monstreController.creerMonstre(5);
 
-        // Event handlers for key presses and releases
-        scene.setOnKeyPressed(event -> joueurController.handleKeyPress(event.getCode()));
-        scene.setOnKeyReleased(event -> joueurController.handleKeyRelease(event.getCode()));
+        scene.setOnKeyPressed(event -> {
+            joueurController.handleKeyPress(event.getCode());
+            paramController.handleKeyPress(event.getCode());
+        });
+        
+        scene.setOnKeyReleased(event -> {
+            joueurController.handleKeyRelease(event.getCode());
+        });
 
         // Start the game loop
         startGameLoop();
