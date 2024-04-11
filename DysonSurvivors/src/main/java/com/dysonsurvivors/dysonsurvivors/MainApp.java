@@ -87,17 +87,28 @@ public class MainApp extends Application {
         joueur = joueurController.CreateJoueur();
 
         paramController = new ParamController(GAME_WIDTH, GAME_HEIGHT, gamePane, joueurController);
-        // Création d'un objet pour l'ajouter à l'inventaire*
-        Objet objet = new ChampignonHallucinogene("Champi Champlax", "Oeeeeee!", "1.png");
-        joueur.getInventaire().ajouterObjet(objet);
-        inventaireController = new InventaireController(joueur.getInventaire(), gamePane);
-        inventaireController.afficherInventaire();
 
         // Creation des monstres
         nbMonstresMax = 10;
         listeMonstres = new Monstre[nbMonstresMax];
         monstreController = new MonstreController(listeMonstres, GAME_WIDTH, GAME_HEIGHT, gamePane);
         monstreController.creerMonstre(5);
+
+        // Création d'un objet pour l'ajouter à l'inventaire*
+        Objet objet = new ChampignonHallucinogene("Champi Champlax", "Oeeeeee!", "Mushrooms/1.png");
+        Objet objet2 = new ChampignonHallucinogene("Champi Champlax", "Oeeeeee!", "Mushrooms/2.png");
+        Objet objet3 = new ChampignonHallucinogene("Champi Champlax", "Oeeeeee!", "Mushrooms/3.png");
+        Objet objet4 = new ChampignonHallucinogene("Champi Champlax", "Oeeeeee!", "Mushrooms/4.png");
+        Objet objet5 = new ChampignonHallucinogene("Champi Champlax", "Oeeeeee!", "Mushrooms/5.png");
+        Objet objet6 = new ChampignonHallucinogene("Champi Champlax", "Oeeeeee!", "Mushrooms/6.png");
+        joueur.getInventaire().ajouterObjet(objet);
+        joueur.getInventaire().ajouterObjet(objet2);
+        joueur.getInventaire().ajouterObjet(objet3);
+        joueur.getInventaire().ajouterObjet(objet4);
+        joueur.getInventaire().ajouterObjet(objet5);
+        joueur.getInventaire().ajouterObjet(objet6);
+        inventaireController = new InventaireController(joueur.getInventaire(), gamePane);
+        inventaireController.afficherInventaire();
 
         // Event handlers for key presses and releases
         scene.setOnKeyPressed(event -> joueurController.handleKeyPress(event.getCode()));
@@ -135,6 +146,8 @@ public class MainApp extends Application {
                 monstre.seDeplacer(joueurController.getJoueur());
             }
         }
+        // Met a jour la position de l'inventaire
+        /*inventaireController.updateInventoryPosition();*/
     }
 
     public static void main(String[] args) {

@@ -2,43 +2,80 @@ package com.dysonsurvivors.dysonsurvivors.Controllers;
 
 import com.dysonsurvivors.dysonsurvivors.Models.Inventaire.Inventaire;
 import com.dysonsurvivors.dysonsurvivors.Models.Objet;
+
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 public class InventaireController {
     private Inventaire inventaire;
-    private Pane inventairePane; // Supposons que vous utilisez un Pane pour afficher l'inventaire
-    private Pane gamePane; // Supposons que vous utilisez un Pane pour afficher le jeu
+    private Pane inventairePane;
+    private Pane gamePane;
+
+    private int GAME_WIDTH;
+    private int GAME_HEIGHT;
 
     public InventaireController(Inventaire inventaire, Pane gamePane) {
         this.inventaire = inventaire;
         this.inventairePane = new Pane();
         this.gamePane = gamePane;
+        gamePane.getChildren().add(inventairePane);
+
     }
 
     public void afficherInventaire() {
         inventairePane.getChildren().clear(); // Effacer le contenu précédent de l'inventaire
+        inventairePane.setStyle(
+                "-fx-background-color: rgba(0, 0, 0, 0.7);" +
+                "-fx-border-color: rgb(255, 233, 0, 1);" +
+                "-fx-border-width: 2px;"
+        );
 
-        double yPosition = 0; // Position verticale initiale
+        inventairePane.setLayoutX(10);
+        inventairePane.setLayoutY(10);
 
         // Parcourir les objets dans l'inventaire et les afficher sur l'écran de jeu
-        for (int i = 0; i < inventaire.getObjets().length; i++) {
-            Objet objet = inventaire.getObjets()[i];
+        Objet[] objets = inventaire.getObjets(); // Récupérer les objets de l'inventaire
+        double x = 0; // Position x initiale
+        double y = 0; // Position y initiale
+        double itemWidth = 40; // Largeur de l'objet
+        double itemHeight = 40; // Hauteur de l'objet
+
+        for (Objet objet : objets) {
             if (objet != null) {
-                System.out.println("Affichage de l'objet: " + objet.getNom());
-                // Afficher l'objet sur l'écran de jeu (par exemple, en créant des ImageView pour chaque objet et en les ajoutant à l'inventairePane)
-                ImageView imageView = new ImageView(objet.getImage());
-                imageView.setX(0); // Position horizontale fixe (à gauche)
-                imageView.setY(yPosition); // Position verticale définie
-                yPosition += 50; // Augmenter la position verticale pour l'objet suivant
+                // Charger l'image de l'objet
+                Image image = chargerSprite(objet.getNomImage());
+                // Créer une ImageView pour l'objet
+                ImageView imageView = new ImageView(image);
+                // Définir la position de l'objet
+                imageView.setLayoutX(x + 5);
+                imageView.setLayoutY(y + 5);
+                // Définir la taille de l'objet
+                imageView.setFitWidth(itemWidth - 5);
+                imageView.setFitHeight(itemHeight - 5);
+                // Ajouter l'objet à l'inventairePane
                 inventairePane.getChildren().add(imageView);
-                /*// Redimessionner l'inventairePane pour s'adapter à la taille des objets
-                inventairePane.setPrefHeight(yPosition);*/
-                // Colorier l'arrière-plan de l'inventairePane
-                inventairePane.setStyle("-fx-background-color: rgba(255, 255, 255, 0.5);");
-                inventairePane.setPrefSize(200, 200); // Définir la taille de l'inventairePane
-                gamePane.getChildren().add(inventairePane); // Ajouter l'inventairePane au gamePane
+                // Mettre à jour les coordonnées pour le prochain objet
+                x += itemWidth; // Décaler horizontalement
+                if (x >= inventairePane.getWidth()) {
+                    x = 0; // Revenir à la ligne si l'objet dépasse la largeur de l'inventairePane
+                    y += itemHeight; // Décaler verticalement
+                }
             }
         }
     }
+
+    private Image chargerSprite(String nomImage) {
+        // Charger l'image depuis le fichier
+        return new Image(getClass().getResourceAsStream(nomImage));
+    }
+
+/*    public void updateInventoryPosition() {
+        // Mettre à jour la position de l'inventaire
+        double x = 10;
+        double y = 10;
+        inventairePane.setLayoutX(x);
+        inventairePane.setLayoutY(y);
+    }*/
 }
+
