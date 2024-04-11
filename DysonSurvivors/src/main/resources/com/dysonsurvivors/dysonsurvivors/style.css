@@ -6,11 +6,75 @@
     -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0); 
 }
 
-/* Style pour les éléments de l'inventaire */
-.objet {
+/* Style pour l'inventaire */
+.inventaire-pane {
+    -fx-background-color: rgba(31, 31, 31, 0.8);
+    -fx-border-color: rgb(255, 233, 0, 1);
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
 
-    -fx-background-color: #CCCCCC; /* Couleur de fond */
-    -fx-border-color: #000000; /* Couleur de la bordure */
+/* Style pour la fenetre des parametres */
+.param-pane {
+    -fx-background-color: rgba(31, 31, 31, 0.8);
+    -fx-border-color: rgb(255, 233, 0, 1);
+    -fx-background-radius: 5px;
     -fx-border-width: 1px; /* Largeur de la bordure */
     -fx-border-radius: 5px; /* Rayon de la bordure */
+}
+
+/* Style pour les boutons de la fenetre des parametres */
+.param-button {
+    -fx-background-color: rgba(145, 145, 145, 0.7);
+    -fx-border-color: rgb(255, 233, 0, 1);
+    -fx-background-radius: 5px;
+    -fx-border-width: 1px; /* Largeur de la bordure */
+    -fx-border-radius: 5px; /* Rayon de la bordure */
+    -fx-text-fill: rgb(255, 233, 0, 1);
+}
+
+.param-button:hover {
+    -fx-background-color: #AAAAAA; /* Couleur de fond */
+}
+
+/* Style pour la combo-box de la fenetre des parametres */
+.param-combobox {
+    -fx-background-color: rgba(145, 145, 145, 0.7);
+    -fx-border-color: rgb(255, 233, 0, 1); /* Couleur de la bordure */
+    -fx-background-radius: 5px;
+    -fx-border-width: 1px; /* Largeur de la bordure */
+    -fx-border-radius: 5px; /* Rayon de la bordure */
+    -fx-text-fill: rgb(255, 233, 0, 1);
+}
+
+.param-combobox .arrow {
+    -fx-border-color: rgb(255, 233, 0, 1); /* Couleur de la bordure */
+}
+
+.param-combobox .param-title {
+    -fx-text-fill: rgb(255, 233, 0, 1);
+}
+
+.param-combobox .text {
+    -fx-text-fill: rgb(255, 233, 0, 1);
+}
+
+.param-combobox:hover {
+    -fx-background-color: #AAAAAA; /* Couleur de fond */
+}
+
+/* Style pour les labels de la fenetre des parametres */
+.param-label {
+    -fx-font-size: 10px;
+    -fx-padding: 5px;
+    -fx-text-fill: rgb(255, 233, 0, 1);
+}
+
+/* Style pour les titres de la fenetre des parametres */
+.param-title {
+    -fx-padding: 10px;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: rgb(255, 233, 0, 1);
 }

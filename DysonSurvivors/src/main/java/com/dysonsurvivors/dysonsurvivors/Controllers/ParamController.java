@@ -1,5 +1,7 @@
 package com.dysonsurvivors.dysonsurvivors.Controllers;
 
+import com.dysonsurvivors.dysonsurvivors.Models.*;
+import com.dysonsurvivors.dysonsurvivors.Models.Inventaire.Equipements.Armes.ChampignonHallucinogene;
 import javafx.collections.FXCollections;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -8,52 +10,50 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
-import com.dysonsurvivors.dysonsurvivors.Models.IhandleKeyAction;
-import com.dysonsurvivors.dysonsurvivors.Models.JoueurSingleton;
-import com.dysonsurvivors.dysonsurvivors.Models.SArrowKey;
-import com.dysonsurvivors.dysonsurvivors.Models.SAzerty;
-import com.dysonsurvivors.dysonsurvivors.Models.SQwerty;
-
 public class ParamController {
-    private int GAME_WIDTH;
-    private int GAME_HEIGHT;
     private Pane gamePane;
     private Pane paramPane;
     private boolean isActive;
     private JoueurController joueurController;
+    private int paramWidth;
+    private int paramHeight;
 
-    public ParamController(int GAME_WIDTH, int GAME_HEIGHT, Pane gamePane, JoueurController joueurController) {
-        this.GAME_WIDTH = GAME_WIDTH;
-        this.GAME_HEIGHT = GAME_HEIGHT;
+
+    public ParamController(Pane gamePane, JoueurController joueurController) {
         this.gamePane = gamePane;
         this.paramPane = new Pane();
         this.joueurController = joueurController;
         this.isActive = false;
+        this.paramWidth = 200;
+        this.paramHeight = 160;
         createParamPane();
     }
 
     private void createParamPane() {
 
-        paramPane.setStyle("-fx-background-color: #CCCCCC;");
+        // Application d'une classe css pour le style de la fenêtre de paramètres
+        paramPane.getStyleClass().add("param-pane");
+
+        Label titleLabel = new Label("Paramètres");
+        titleLabel.getStyleClass().add("param-title");
+
+        Label KeysLabel = new Label("Keyboard keys :");
+        KeysLabel.getStyleClass().add("param-label");
+        KeysLabel.setTranslateX(7);
+        KeysLabel.setTranslateY(45);
 
         ComboBox<String> paramComboBox = new ComboBox<>();
+        paramComboBox.getStyleClass().add("param-combobox");
         paramComboBox.setItems(FXCollections.observableArrayList("Azerty", "Qwerty", "ArrowKeys"));
         paramComboBox.setPromptText("Azerty");
         paramComboBox.setTranslateX(10);
-        paramComboBox.setTranslateY(50);
-        
-        Label titleLabel = new Label("Paramètres");
-        titleLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
-
-        Label KeysLabel = new Label("Keyboard keys :");
-        KeysLabel.setStyle("-fx-font-size: 10px;");
-        KeysLabel.setTranslateX(10);
-        KeysLabel.setTranslateY(30);
+        paramComboBox.setTranslateY(70);
         
         Button quitButton = new Button("Quitter le jeu");
+        quitButton.getStyleClass().add("param-button");
         quitButton.setOnAction(event -> System.exit(0));
         quitButton.setTranslateX(10);
-        quitButton.setTranslateY(80);
+        quitButton.setTranslateY(115);
 
         paramComboBox.setOnAction(event -> {
             String selectedParam = paramComboBox.getSelectionModel().getSelectedItem();
@@ -79,7 +79,8 @@ public class ParamController {
         paramPane.getChildren().addAll(titleLabel,KeysLabel, paramComboBox, quitButton);
         paramPane.setLayoutX(JoueurSingleton.getInstance().getHitbox().getLayoutX() - 100);
         paramPane.setLayoutY(JoueurSingleton.getInstance().getHitbox().getLayoutY() - 100);
-        paramPane.setPrefSize(200, 120);
+        /* Taille adaptative en fonction du contenu */
+        paramPane.setPrefSize(paramWidth, paramHeight);
     }
 
     public void handleKeyPress(KeyCode code) {
@@ -108,5 +109,27 @@ public class ParamController {
     public boolean getIsActive() {
         return this.isActive;
     }
+
+    public Pane getParamPane() {
+        return this.paramPane;
+    }
+
+    public int getParamWidth() {
+        return this.paramWidth;
+    }
+
+    public void setParamWidth(int paramWidth) {
+        this.paramWidth = paramWidth;
+    }
+
+    public int getParamHeight() {
+        return this.paramHeight;
+    }
+
+    public void setParamHeight(int paramHeight) {
+        this.paramHeight = paramHeight;
+    }
+
+
     
 }

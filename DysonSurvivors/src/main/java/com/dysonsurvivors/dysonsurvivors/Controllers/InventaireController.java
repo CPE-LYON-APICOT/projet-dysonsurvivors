@@ -25,21 +25,16 @@ public class InventaireController {
 
     public void afficherInventaire() {
         inventairePane.getChildren().clear(); // Effacer le contenu précédent de l'inventaire
-        inventairePane.setStyle(
-                "-fx-background-color: rgba(0, 0, 0, 0.7);" +
-                "-fx-border-color: rgb(255, 233, 0, 1);" +
-                "-fx-border-width: 2px;"
-        );
-
-        inventairePane.setLayoutX(10);
-        inventairePane.setLayoutY(10);
+        inventairePane.getStyleClass().add("inventaire-pane");
+        inventairePane.setLayoutX(-gamePane.getLayoutX());
+        inventairePane.setLayoutY(-gamePane.getLayoutY());
 
         // Parcourir les objets dans l'inventaire et les afficher sur l'écran de jeu
         Objet[] objets = inventaire.getObjets(); // Récupérer les objets de l'inventaire
         double x = 0; // Position x initiale
         double y = 0; // Position y initiale
-        double itemWidth = 40; // Largeur de l'objet
-        double itemHeight = 40; // Hauteur de l'objet
+        double itemWidth = 30; // Largeur de l'objet
+        double itemHeight = 30; // Hauteur de l'objet
 
         for (Objet objet : objets) {
             if (objet != null) {
@@ -47,14 +42,14 @@ public class InventaireController {
                 Image image = chargerSprite(objet.getNomImage());
                 // Créer une ImageView pour l'objet
                 ImageView imageView = new ImageView(image);
+                // Ajouter l'objet à l'inventairePane
+                inventairePane.getChildren().add(imageView);
                 // Définir la position de l'objet
                 imageView.setLayoutX(x + 5);
                 imageView.setLayoutY(y + 5);
                 // Définir la taille de l'objet
-                imageView.setFitWidth(itemWidth - 5);
-                imageView.setFitHeight(itemHeight - 5);
-                // Ajouter l'objet à l'inventairePane
-                inventairePane.getChildren().add(imageView);
+                imageView.setFitWidth(itemWidth);
+                imageView.setFitHeight(itemHeight);
                 // Mettre à jour les coordonnées pour le prochain objet
                 x += itemWidth; // Décaler horizontalement
                 if (x >= inventairePane.getWidth()) {

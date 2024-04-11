@@ -69,7 +69,6 @@ public class MainApp extends Application {
             System.exit(0);
         });
 
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("game.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -86,7 +85,7 @@ public class MainApp extends Application {
         joueurController = new JoueurController(GAME_WIDTH, GAME_HEIGHT, gamePane);
         joueur = joueurController.CreateJoueur();
 
-        paramController = new ParamController(GAME_WIDTH, GAME_HEIGHT, gamePane, joueurController);
+        paramController = new ParamController(gamePane, joueurController);
 
         // Creation des monstres
         nbMonstresMax = 10;
@@ -106,8 +105,7 @@ public class MainApp extends Application {
         joueur.getInventaire().ajouterObjet(objet3);
         joueur.getInventaire().ajouterObjet(objet4);
         joueur.getInventaire().ajouterObjet(objet5);
-        joueur.getInventaire().ajouterObjet(objet6);
-        inventaireController = new InventaireController(joueur.getInventaire(), gamePane);
+        inventaireController = new InventaireController(joueur.getInventaire(), paramController.getParamPane());
         inventaireController.afficherInventaire();
 
         // Event handlers for key presses and releases
