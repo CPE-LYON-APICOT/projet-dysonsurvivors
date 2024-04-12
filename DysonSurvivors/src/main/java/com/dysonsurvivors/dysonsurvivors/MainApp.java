@@ -26,8 +26,8 @@ import javafx.scene.layout.Pane;
 import java.io.IOException;
 
 public class MainApp extends Application {
-    private static int GAME_WIDTH = 1024;
-    private static int GAME_HEIGHT = 600;
+    private static int GAME_WIDTH = 960;
+    private static int GAME_HEIGHT = 540;
     private Label coordinatesLabel;
     private MonstreController monstreController;
     private Monstre[] listeMonstres;
@@ -93,18 +93,12 @@ public class MainApp extends Application {
         monstreController = new MonstreController(listeMonstres, GAME_WIDTH, GAME_HEIGHT, gamePane);
         monstreController.creerMonstre(5);
 
-        // Création d'un objet pour l'ajouter à l'inventaire*
-        Objet objet = new ChampignonHallucinogene("Champi Champlax", "Oeeeeee!", "Mushrooms/1.png");
-        Objet objet2 = new ChampignonHallucinogene("Champi Champlax", "Oeeeeee!", "Mushrooms/2.png");
-        Objet objet3 = new ChampignonHallucinogene("Champi Champlax", "Oeeeeee!", "Mushrooms/3.png");
-        Objet objet4 = new ChampignonHallucinogene("Champi Champlax", "Oeeeeee!", "Mushrooms/4.png");
-        Objet objet5 = new ChampignonHallucinogene("Champi Champlax", "Oeeeeee!", "Mushrooms/5.png");
-        Objet objet6 = new ChampignonHallucinogene("Champi Champlax", "Oeeeeee!", "Mushrooms/6.png");
-        joueur.getInventaire().ajouterObjet(objet);
-        joueur.getInventaire().ajouterObjet(objet2);
-        joueur.getInventaire().ajouterObjet(objet3);
-        joueur.getInventaire().ajouterObjet(objet4);
-        joueur.getInventaire().ajouterObjet(objet5);
+        // Création d'objets pour l'ajouter à l'inventaire*
+        for (int i = 1; i < 5; i++) {
+            Objet objet = new ChampignonHallucinogene("Champi Champlax", "Oeeeeee!", "Mushrooms/" + i + ".png");
+            joueur.getInventaire().ajouterObjet(objet);
+        }
+
         inventaireController = new InventaireController(joueur.getInventaire(), paramController.getParamPane());
         inventaireController.afficherInventaire();
 

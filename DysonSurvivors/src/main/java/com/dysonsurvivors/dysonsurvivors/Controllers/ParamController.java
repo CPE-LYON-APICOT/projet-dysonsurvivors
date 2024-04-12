@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 public class ParamController {
     private Pane gamePane;
@@ -25,7 +26,7 @@ public class ParamController {
         this.joueurController = joueurController;
         this.isActive = false;
         this.paramWidth = 200;
-        this.paramHeight = 160;
+        this.paramHeight = 220;
         createParamPane();
     }
 
@@ -53,7 +54,13 @@ public class ParamController {
         quitButton.getStyleClass().add("param-button");
         quitButton.setOnAction(event -> System.exit(0));
         quitButton.setTranslateX(10);
-        quitButton.setTranslateY(115);
+        quitButton.setTranslateY(175);
+
+        Button fullscreenButton = new Button("Plein écran");
+        fullscreenButton.getStyleClass().add("param-button");
+        fullscreenButton.setOnAction(event -> toggleFullscreen());
+        fullscreenButton.setTranslateX(10);
+        fullscreenButton.setTranslateY(115); // Ajustez la position en fonction de votre mise en page
 
         paramComboBox.setOnAction(event -> {
             String selectedParam = paramComboBox.getSelectionModel().getSelectedItem();
@@ -76,7 +83,7 @@ public class ParamController {
             }
         });
 
-        paramPane.getChildren().addAll(titleLabel,KeysLabel, paramComboBox, quitButton);
+        paramPane.getChildren().addAll(titleLabel,KeysLabel, paramComboBox, quitButton, fullscreenButton);
         paramPane.setLayoutX(JoueurSingleton.getInstance().getHitbox().getLayoutX() - 100);
         paramPane.setLayoutY(JoueurSingleton.getInstance().getHitbox().getLayoutY() - 100);
         /* Taille adaptative en fonction du contenu */
@@ -114,6 +121,17 @@ public class ParamController {
         return this.paramPane;
     }
 
+    private void toggleFullscreen() {
+        Stage stage = (Stage) gamePane.getScene().getWindow();
+        if (stage.isFullScreen()) {
+            stage.setFullScreen(false);
+            joueurController.centerCameraOnPlayer();
+        } else {
+            stage.setFullScreen(true);
+            joueurController.centerCameraOnPlayer();
+        }
+    }
+
     public int getParamWidth() {
         return this.paramWidth;
     }
@@ -129,7 +147,5 @@ public class ParamController {
     public void setParamHeight(int paramHeight) {
         this.paramHeight = paramHeight;
     }
-
-
     
 }
