@@ -20,8 +20,9 @@ public class Monstre extends Personnage{
     private int currentFrame = 0;
     private int oldX = 0;
     private int oldY = 0;
+    int attaque;
 
-    public Monstre(String nom, int pvMax, IDeplacementMonstre deplacement) {
+    public Monstre(String nom, int pvMax, IDeplacementMonstre deplacement,int attaque) {
         super(nom, pvMax);
         this.deplacement = deplacement;
         chargerSprite(); // Charger la sprite du monstre
@@ -58,8 +59,12 @@ public class Monstre extends Personnage{
         /*hitbox.setStyle("-fx-background-color: blue;");*/
     }
 
-    private void attaquer() {
-        System.out.println("Monstre attaque");
+    public void setAttaque(int attaque) {
+        this.attaque = attaque;
+    }
+
+    public int getAttaque() {
+        return attaque;
     }
     public void seDeplacer(Joueur joueur) {
         deplacement.seDeplacer(joueur,this);

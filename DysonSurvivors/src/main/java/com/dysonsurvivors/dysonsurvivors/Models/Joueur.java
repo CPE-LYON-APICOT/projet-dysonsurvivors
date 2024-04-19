@@ -191,4 +191,10 @@ public class Joueur extends Personnage{
     public Inventaire getInventaire() {
         return inventaire;
     }
+    
+    public void perdreVie(int degats) {
+        super.perdreVie(degats);
+        lifeBarCurrent.setWidth(pv/2);
+    }
+    
 }

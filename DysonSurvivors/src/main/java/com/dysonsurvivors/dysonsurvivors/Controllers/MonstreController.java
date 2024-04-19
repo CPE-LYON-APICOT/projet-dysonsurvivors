@@ -25,7 +25,7 @@ public class MonstreController {
         for (int i = 0; i < nbMonstres; i++) {
             // Si la liste de monstres n'est pas pleine, on ajoute un monstre
             if (listeMonstres[i] == null) {
-                Monstre monstre = monstreFactory.creerMonstre((int) (Math.random() * 3) + 1);
+                Monstre monstre = monstreFactory.creerMonstre((int) (Math.random() * 3) + 1 ,1);
                 // fais apparaitre les monstres a des positions aleatoires
                 monstre.getHitbox().setLayoutX((int) (Math.random() * GAME_WIDTH));
                 monstre.getHitbox().setLayoutY((int) (Math.random() * GAME_HEIGHT));

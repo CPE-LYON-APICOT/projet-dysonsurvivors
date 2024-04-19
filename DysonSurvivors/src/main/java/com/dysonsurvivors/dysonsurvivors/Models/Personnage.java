@@ -35,4 +35,8 @@ public abstract class Personnage{
     public Pane getHitbox() {
         return hitbox;
     }
+
+    public void perdreVie(int degats) {
+        pv -= degats;
+    }
 }

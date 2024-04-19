@@ -40,9 +40,10 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         /* Musique */
-        String musicFile = "src/main/resources/com/dysonsurvivors/dysonsurvivors/music/pdm-soundtrack.mp3";
+        // String musicFile = "src/main/resources/com/dysonsurvivors/dysonsurvivors/Music/pdm-soundtrack.mp3";
         // Créer un objet Media avec le fichier audio
-        Media sound = new Media(new File(musicFile).toURI().toString());
+        // Media sound = new Media(new File(musicFile).toURI().toString());
+        Media sound = new Media(getClass().getResource("Music/pdm-soundtrack.mp3").toExternalForm());
         // Créer un lecteur audio
         MediaPlayer mediaPlayer = new MediaPlayer(sound);
         // Configurer le lecteur audio pour qu'il joue en boucle

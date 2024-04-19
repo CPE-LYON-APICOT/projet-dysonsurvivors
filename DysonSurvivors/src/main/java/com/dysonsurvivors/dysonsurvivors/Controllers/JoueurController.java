@@ -4,6 +4,8 @@ import com.dysonsurvivors.dysonsurvivors.Models.IhandleKeyAction;
 import com.dysonsurvivors.dysonsurvivors.Models.Joueur;
 import com.dysonsurvivors.dysonsurvivors.Models.JoueurSingleton;
 import com.dysonsurvivors.dysonsurvivors.Models.SAzerty;
+import com.dysonsurvivors.dysonsurvivors.Models.IIsHitted;
+import com.dysonsurvivors.dysonsurvivors.Models.Monstre;
 
 import javafx.scene.input.KeyCode;
 
@@ -11,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
 
-public class JoueurController{
+public class JoueurController implements IIsHitted{
     private Joueur joueur;
     private int GAME_WIDTH;
     private int GAME_HEIGHT;
@@ -91,4 +93,16 @@ public class JoueurController{
     public void setHandleKeyAction(IhandleKeyAction handleKeyAction) {
         this.handleKeyAction = handleKeyAction;
     }
+
+    public void isHitted(Monstre[] listeMonstres) {
+        // Vérifie si un monstre du gamepan est en collision avec le joueur
+        for (Monstre monstre : listeMonstres) {
+            if (monstre != null) {
+                if (joueur.getHitbox().getBoundsInParent().intersects(monstre.getHitbox().getBoundsInParent())) {
+                    joueur.perdreVie(monstre.getAttaque());
+                }
+            }
+        }
+    }
+
 }
