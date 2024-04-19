@@ -40,24 +40,7 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         /* Musique */
-        // String musicFile = "src/main/resources/com/dysonsurvivors/dysonsurvivors/Music/pdm-soundtrack.mp3";
-        // Créer un objet Media avec le fichier audio
-        // Media sound = new Media(new File(musicFile).toURI().toString());
         soundController = new SoundController();
-
-
-        // Facultatif : mettre en pause la musique après un certain temps
-        // mediaPlayer.setOnPlaying(() -> {
-        //     new java.util.Timer().schedule(
-        //             new java.util.TimerTask() {
-        //                 @Override
-        //                 public void run() {
-        //                     mediaPlayer.pause();
-        //                 }
-        //             },
-        //             30000 // Durée en millisecondes (30 secondes)
-        //     );
-        // });
 
         // Ajouter un gestionnaire d'événements pour fermer la fenêtre
         primaryStage.setOnCloseRequest(event -> {
@@ -91,7 +74,7 @@ public class MainApp extends Application {
 
         // Création d'objets pour l'ajouter à l'inventaire*
         for (int i = 1; i < 5; i++) {
-            Objet objet = new ChampignonHallucinogene("Champi Champlax", "Oeeeeee!", "Mushrooms/" + i + ".png");
+            Objet objet = new ChampignonHallucinogene();
             joueur.getInventaire().ajouterObjet(objet);
         }
 
@@ -146,6 +129,9 @@ public class MainApp extends Application {
         joueurController.updateCoordinatesLife();
         // Centre la camera sur le joueur
         joueurController.centerCameraOnPlayer();
+        // Fait attaquer le joueur
+        joueurController.attaquer();
+
         // Fait se deplacer les monstres de la liste
         for (Monstre monstre : listeMonstres) {
             if (monstre != null) {

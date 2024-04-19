@@ -12,9 +12,6 @@ public class InventaireController {
     private Pane inventairePane;
     private Pane gamePane;
 
-    private int GAME_WIDTH;
-    private int GAME_HEIGHT;
-
     public InventaireController(Inventaire inventaire, Pane gamePane) {
         this.inventaire = inventaire;
         this.inventairePane = new Pane();
@@ -65,12 +62,5 @@ public class InventaireController {
         return new Image(getClass().getResourceAsStream(nomImage));
     }
 
-/*    public void updateInventoryPosition() {
-        // Mettre à jour la position de l'inventaire
-        double x = 10;
-        double y = 10;
-        inventairePane.setLayoutX(x);
-        inventairePane.setLayoutY(y);
-    }*/
 }
 

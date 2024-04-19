@@ -31,6 +31,8 @@ public class Joueur extends Personnage{
     private Rectangle lifeBarCurrent;
     private Rectangle lifeBarBorder;
     private double speed;
+    private double orientation;
+    private long attackCooldown;
 
     // Gestion de l'invincibilité du joueur pour ne pas qu'il meurt trop vite
     private boolean invincible;
@@ -40,6 +42,7 @@ public class Joueur extends Personnage{
     public Joueur(String nom, int pvMax) {
         super(nom, pvMax);
         speed = 1;
+        attackCooldown = 1000; // millisecondes
         chargerSprite();
         initAnimationTimeline();
         lifeBarMax = new Rectangle(0, 0, pvMax/2, 3);
@@ -68,6 +71,18 @@ public class Joueur extends Personnage{
 
     public void setRightPressed(boolean rightPressed) {
         this.rightPressed = rightPressed;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
+    public void setAttackCooldown(long attackCooldown) {
+        this.attackCooldown = attackCooldown;
+    }
+
+    public long getAttackCooldown() {
+        return attackCooldown;
     }
 
     public void attaquer() {
@@ -100,12 +115,17 @@ public class Joueur extends Personnage{
         // Changer la frame de l'animation en fonction de la direction du déplacement
         if (leftPressed) {
             startAnimation(); // Exemple: Frame de marche vers la gauche
+            // Definir l'orientation : Convertir l'angle en radians
+            orientation = 180;
         } else if (rightPressed) {
             startAnimation(); // Exemple: Frame de marche vers la droite
+            orientation = 0;
         } else if (upPressed) {
             startAnimation(); // Exemple: Frame de marche vers le haut
+            orientation = 270;
         } else if (downPressed) {
             startAnimation(); // Exemple: Frame de marche vers le bas
+            orientation = 90;
         } else {
             stopAnimation(); // Exemple: Frame de repos
         }
@@ -223,6 +243,14 @@ public class Joueur extends Personnage{
 
         // Créez la timeline avec la KeyFrame
         invincibleTimeline = new Timeline(keyFrame);
+    }
+
+    public double getOrientation() {
+        return orientation;
+    }
+
+    public void setOrientation(double orientation) {
+        this.orientation = orientation;
     }
     
 }

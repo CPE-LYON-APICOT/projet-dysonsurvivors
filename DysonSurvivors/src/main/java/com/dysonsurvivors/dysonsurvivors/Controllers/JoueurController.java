@@ -7,10 +7,17 @@ import com.dysonsurvivors.dysonsurvivors.Models.SAzerty;
 import com.dysonsurvivors.dysonsurvivors.Models.IIsHitted;
 import com.dysonsurvivors.dysonsurvivors.Models.Monstre;
 
+import javafx.animation.TranslateTransition;
 import javafx.scene.input.KeyCode;
 import javafx.geometry.Bounds;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.util.Duration;
+
+import java.util.Objects;
 
 
 public class JoueurController implements IIsHitted{
@@ -19,12 +26,14 @@ public class JoueurController implements IIsHitted{
     private int GAME_HEIGHT;
     private Pane gamePane;
     private IhandleKeyAction handleKeyAction;
+    private long lastAttackTime;
 
     public JoueurController(int GAME_WIDTH, int GAME_HEIGHT, Pane gamePane) {
         this.GAME_WIDTH = GAME_WIDTH;
         this.GAME_HEIGHT = GAME_HEIGHT;
         this.gamePane = gamePane;
         this.handleKeyAction = new SAzerty();
+        lastAttackTime = 0;
     }
 
     public Joueur CreateJoueur() {
@@ -47,7 +56,44 @@ public class JoueurController implements IIsHitted{
     }
 
     public void attaquer() {
-        joueur.attaquer();
+        double distance = 400;
+
+        long currentTime = System.currentTimeMillis();
+        // Vérifier si le cooldown est terminé
+        if (currentTime - lastAttackTime >= joueur.getAttackCooldown()) {
+            // Mettre à jour le temps de la dernière attaque
+            lastAttackTime = currentTime;
+
+            // Créer un nouvel élément graphique pour l'attaque
+            Image attaqueImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("Mushrooms/1.png")));
+            ImageView attaqueImageView = new ImageView(attaqueImage);
+            attaqueImageView.setFitWidth(20);
+            attaqueImageView.setFitHeight(20);
+            Pane attaquePane = new Pane(attaqueImageView);
+
+            // Positionner l'attaque à côté du joueur dans la direction où il regarde
+            double attaqueX = joueur.getHitbox().getLayoutX() + joueur.getHitbox().getWidth()/2;
+            double attaqueY = joueur.getHitbox().getLayoutY() + joueur.getHitbox().getHeight()/2;
+            attaquePane.setLayoutX(attaqueX);
+            attaquePane.setLayoutY(attaqueY);
+
+            // Ajouter l'attaque à gamePane
+            gamePane.getChildren().add(attaquePane);
+
+            // Calculer les composantes x et y du vecteur de direction en fonction de l'angle d'orientation du joueur
+            double directionX = Math.cos(Math.toRadians(joueur.getOrientation())) * distance; // DISTANCE est la distance que l'attaque va parcourir
+            double directionY = Math.sin(Math.toRadians(joueur.getOrientation())) * distance;
+
+            // Créer une transition pour animer l'attaque
+            TranslateTransition attaqueTransition = new TranslateTransition(Duration.seconds(1), attaquePane);
+            attaqueTransition.setByX(directionX);
+            attaqueTransition.setByY(directionY);
+            attaqueTransition.setOnFinished(event -> {
+                // Supprimer l'attaque une fois terminée
+                gamePane.getChildren().remove(attaquePane);
+            });
+            attaqueTransition.play();
+        }
     }
 
     public void updateCoordinatesLabel(Label coordinatesLabel) {
@@ -113,6 +159,10 @@ public class JoueurController implements IIsHitted{
                 }
             }
         }
+    }
+
+    public void setAttackCooldown(long attackCooldown) {
+        this.joueur.setAttackCooldown(attackCooldown);
     }
 
 }
