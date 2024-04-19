@@ -72,7 +72,7 @@ public class ParamController {
 
         musicComboBox.setItems(FXCollections.observableArrayList(musicFiles));
         if (!musicFiles.isEmpty()) {
-            musicComboBox.setPromptText(musicFiles.get(0)); // Prend le premier fichier comme texte d'invite par défaut
+            musicComboBox.setPromptText("Musique");
         } else {
             musicComboBox.setPromptText("Aucune musique trouvée");
         }

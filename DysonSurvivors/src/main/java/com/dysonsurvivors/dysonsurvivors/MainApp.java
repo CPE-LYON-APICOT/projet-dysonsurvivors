@@ -16,6 +16,8 @@ import com.dysonsurvivors.dysonsurvivors.Controllers.ParamController;
 import com.dysonsurvivors.dysonsurvivors.Controllers.SoundController;
 
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -23,19 +25,22 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainApp extends Application {
     private static int GAME_WIDTH = 960;
     private static int GAME_HEIGHT = 540;
     private Label coordinatesLabel;
     private MonstreController monstreController;
-    private Monstre[] listeMonstres;
+    private ArrayList<Monstre> listeMonstres;
     private int nbMonstresMax;
     private JoueurController joueurController;
     private Joueur joueur;
     private InventaireController inventaireController;
     private ParamController paramController;
     private SoundController soundController;
+    private Timeline monsterSpawnTimeline;
+    private int compteurDifficulty = 0;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -67,10 +72,10 @@ public class MainApp extends Application {
         paramController = new ParamController(gamePane, joueurController, soundController);
 
         // Creation des monstres
-        nbMonstresMax = 20;
-        listeMonstres = new Monstre[nbMonstresMax];
+        // nbMonstresMax = 100;
+        listeMonstres = new ArrayList<>();
         monstreController = new MonstreController(listeMonstres, GAME_WIDTH, GAME_HEIGHT, gamePane);
-        monstreController.creerMonstre(20);
+        // monstreController.creerMonstre(20);
 
         // Création d'objets pour l'ajouter à l'inventaire*
         for (int i = 1; i < 5; i++) {
@@ -91,10 +96,29 @@ public class MainApp extends Application {
             joueurController.handleKeyRelease(event.getCode());
         });
 
+        
         // Start the game loop
         startGameLoop();
-
+        startMonsterSpawnTimer();
         primaryStage.show();
+    }
+
+
+    private void startMonsterSpawnTimer() {
+        
+        monsterSpawnTimeline = new Timeline(new KeyFrame(Duration.seconds(10), event -> {
+            createNewMonsterWave((int) (Math.random() * 3) + compteurDifficulty);
+            compteurDifficulty++;
+            System.out.println("Difficulté : " + compteurDifficulty);
+        }));
+        
+        monsterSpawnTimeline.setCycleCount(Timeline.INDEFINITE); // Répéter indéfiniment
+        monsterSpawnTimeline.play();
+    }
+
+    private void createNewMonsterWave(int difficulty) {
+        int nbMonstres = (int) (Math.random() * 5) + 1*difficulty;
+        monstreController.creerMonstre(10+nbMonstres,difficulty);
     }
 
     private void startGameLoop() {

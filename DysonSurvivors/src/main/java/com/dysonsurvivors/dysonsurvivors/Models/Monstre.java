@@ -31,19 +31,8 @@ public class Monstre extends Personnage{
         this.attaque = attaque;
     }
 
-    // private void chargerSprite() {
-    //     // Créer une Pane pour le monstre
-    //     Pane monstrePane = new Pane();
-    //     monstrePane.setPrefSize(30, 30); // Définir la taille du Pane du monstre (à adapter)
-    //     monstrePane.setStyle("-fx-background-color: red;"); // Style du Pane du monstre
-
-    //     // Ajouter la Pane du monstre à la hitbox
-    //     hitbox = monstrePane;
-    // }
-
     private void chargerSprite() {
-        // Charger la sprite sheet
-        var toto = new Image(Objects.requireNonNull(getClass().getResourceAsStream("grenouille.png")));
+
         Image spriteSheet = new Image(Objects.requireNonNull(getClass().getResourceAsStream("ghost.png")));
 
         // Créer une ImageView pour afficher la sprite animée
