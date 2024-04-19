@@ -89,10 +89,10 @@ public class MainApp extends Application {
         paramController = new ParamController(gamePane, joueurController);
 
         // Creation des monstres
-        nbMonstresMax = 10;
+        nbMonstresMax = 20;
         listeMonstres = new Monstre[nbMonstresMax];
         monstreController = new MonstreController(listeMonstres, GAME_WIDTH, GAME_HEIGHT, gamePane);
-        monstreController.creerMonstre(5);
+        monstreController.creerMonstre(20);
 
         // Création d'objets pour l'ajouter à l'inventaire*
         for (int i = 1; i < 5; i++) {

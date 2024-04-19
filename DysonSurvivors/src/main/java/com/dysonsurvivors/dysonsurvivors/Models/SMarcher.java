@@ -1,8 +1,10 @@
 package com.dysonsurvivors.dysonsurvivors.Models;
 
 import javafx.scene.layout.Pane;
+import java.util.Random;
 
 public class SMarcher implements IDeplacementMonstre{
+
     public void seDeplacer(Joueur joueur, Monstre monstre) {
         Pane hJoueur = joueur.getHitbox();
         Pane hMonstre = monstre.getHitbox();
@@ -12,13 +14,21 @@ public class SMarcher implements IDeplacementMonstre{
         double monstreCenterX = hMonstre.getLayoutX() + hMonstre.getPrefWidth() / 2;
         double monstreCenterY = hMonstre.getLayoutY() + hMonstre.getPrefHeight() / 2;
 
-        double angle = Math.atan2(playerCenterY - monstreCenterY, playerCenterX - monstreCenterX);
+        double angleToPlayer = Math.atan2(playerCenterY - monstreCenterY, playerCenterX - monstreCenterX);
         double speed = 0.5; // Ajuster la vitesse du monstre
-        double newX = monstreCenterX + Math.cos(angle) * speed;
-        double newY = monstreCenterY + Math.sin(angle) * speed;
+
+        // Ajout de l'aléatoire à l'angle de déplacement
+        Random random = new Random();
+        double randomAngle = random.nextDouble() * Math.PI - Math.PI / 2; // Angle aléatoire entre -pi/4 et pi/4
+        double finalAngle = angleToPlayer + randomAngle;
+
+        double newX = monstreCenterX + Math.cos(finalAngle) * speed;
+        double newY = monstreCenterY + Math.sin(finalAngle) * speed;
 
         // Mettre à jour les coordonnées de la hitbox du monstre
         monstre.getHitbox().setLayoutX(newX - hMonstre.getPrefWidth() / 2);
         monstre.getHitbox().setLayoutY(newY - hMonstre.getPrefHeight() / 2);
     }
+
+
 }
