@@ -31,6 +31,10 @@ public class Joueur extends Personnage{
     private Rectangle lifeBarCurrent;
     private Rectangle lifeBarBorder;
 
+    // Gestion de l'invincibilité du joueur pour ne pas qu'il meurt trop vite
+    private boolean invincible;
+    private Timeline invincibleTimeline;
+
 
     public Joueur(String nom, int pvMax) {
         super(nom, pvMax);
@@ -43,6 +47,8 @@ public class Joueur extends Personnage{
         lifeBarCurrent.setFill(Color.RED);
         lifeBarBorder.setFill(Color.GOLD);
         inventaire = new Inventaire();
+        this.invincible = false; // Le joueur n'est pas invincible au début
+        initInvincibleTimeline(); // Initialisez la timeline d'invincibilité
     }
 
     // Méthodes pour mettre à jour l'état des touches de déplacement
@@ -191,12 +197,31 @@ public class Joueur extends Personnage{
     public Inventaire getInventaire() {
         return inventaire;
     }
-    
+
     public void perdreVie(int degats) {
-        super.perdreVie(degats);
-        lifeBarCurrent.setWidth(pv/2);
-        // lifeBarCurrent.setFill(Color.PURPLE);
-        System.out.println(degats);
+        if (!invincible) { // Vérifiez si le joueur est invincible
+            super.perdreVie(degats);
+            lifeBarCurrent.setWidth(pv / 2);
+            // Démarrez la période d'invincibilité
+            demarrerInvincibilite();
+            System.out.println(degats);
+        }
+    }
+
+    private void demarrerInvincibilite() {
+        invincible = true; // Le joueur devient invincible
+        invincibleTimeline.play(); // Démarrez la timeline
+    }
+
+    private void initInvincibleTimeline() {
+        // Créez une KeyFrame pour désactiver l'invincibilité après un certain délai
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.1), event -> {
+            invincible = false; // Le joueur n'est plus invincible après 2 secondes
+            invincibleTimeline.stop(); // Arrêtez la timeline
+        });
+
+        // Créez la timeline avec la KeyFrame
+        invincibleTimeline = new Timeline(keyFrame);
     }
     
 }
