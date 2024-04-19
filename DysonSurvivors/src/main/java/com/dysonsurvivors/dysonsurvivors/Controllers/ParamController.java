@@ -1,5 +1,9 @@
 package com.dysonsurvivors.dysonsurvivors.Controllers;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.dysonsurvivors.dysonsurvivors.Models.*;
 import com.dysonsurvivors.dysonsurvivors.Models.Inventaire.Equipements.Armes.ChampignonHallucinogene;
 import javafx.collections.FXCollections;
@@ -54,8 +58,24 @@ public class ParamController {
 
         ComboBox<String> musicComboBox = new ComboBox<>();
         musicComboBox.getStyleClass().add("param-combobox");
-        musicComboBox.setItems(FXCollections.observableArrayList("pdm-soundtrack", "on_pourrait_tenculer"));
-        musicComboBox.setPromptText("pdm-soundtrack");
+
+        List<String> musicFiles = new ArrayList<>();
+        File folder = new File(getClass().getResource("Music").getFile());
+        File[] files = folder.listFiles();
+        if (files != null){
+            for (File file : files) {
+                    String fileName = file.getName();
+                    fileName = fileName.substring(0, fileName.lastIndexOf('.'));
+                    musicFiles.add(fileName);
+            };
+        };
+
+        musicComboBox.setItems(FXCollections.observableArrayList(musicFiles));
+        if (!musicFiles.isEmpty()) {
+            musicComboBox.setPromptText(musicFiles.get(0)); // Prend le premier fichier comme texte d'invite par défaut
+        } else {
+            musicComboBox.setPromptText("Aucune musique trouvée");
+        }
         musicComboBox.setTranslateX(10);
         musicComboBox.setTranslateY(115);
 
@@ -93,7 +113,7 @@ public class ParamController {
         });
 
         musicComboBox.setOnAction(event -> {
-            String selectedParam = paramComboBox.getSelectionModel().getSelectedItem();
+            String selectedParam = musicComboBox.getSelectionModel().getSelectedItem();
             soundController.stopMusic();
             soundController.setMusic(selectedParam);
             soundController.playMusic();
