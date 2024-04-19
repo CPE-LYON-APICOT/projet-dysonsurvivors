@@ -129,8 +129,9 @@ public class MainApp extends Application {
                 if (elapsedTime > desiredFrameTime) {
                     lastUpdate = currentNanoTime;
 
-                    // Mettez à jour le jeu
-                    update();
+                    if (!paramController.getIsActive()) {
+                        update();
+                    }
                 }
             }
         }.start();

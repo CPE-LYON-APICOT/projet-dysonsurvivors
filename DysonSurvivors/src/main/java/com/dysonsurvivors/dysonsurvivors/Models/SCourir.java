@@ -16,7 +16,7 @@ public class SCourir implements IDeplacementMonstre{
         double monstreCenterY = hMonstre.getLayoutY() + hMonstre.getPrefHeight() / 2;
 
         double angleToPlayer = Math.atan2(playerCenterY - monstreCenterY, playerCenterX - monstreCenterX);
-        double speed = 0.7; // Ajuster la vitesse du monstre
+        double speed = 1; // Ajuster la vitesse du monstre
 
         // Ajout de l'aléatoire à l'angle de déplacement
         Random random = new Random();

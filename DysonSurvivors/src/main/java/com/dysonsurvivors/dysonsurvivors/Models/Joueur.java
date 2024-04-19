@@ -30,6 +30,7 @@ public class Joueur extends Personnage{
     private Rectangle lifeBarMax;
     private Rectangle lifeBarCurrent;
     private Rectangle lifeBarBorder;
+    private double speed;
 
     // Gestion de l'invincibilité du joueur pour ne pas qu'il meurt trop vite
     private boolean invincible;
@@ -38,6 +39,7 @@ public class Joueur extends Personnage{
 
     public Joueur(String nom, int pvMax) {
         super(nom, pvMax);
+        speed = 1;
         chargerSprite();
         initAnimationTimeline();
         lifeBarMax = new Rectangle(0, 0, pvMax/2, 3);
@@ -74,10 +76,10 @@ public class Joueur extends Personnage{
 
     public void seDeplacer() {
         double dx = 0, dy = 0;
-        if (upPressed) dy -= 1;
-        if (downPressed) dy += 1;
-        if (leftPressed) dx -= 1;
-        if (rightPressed) dx += 1;
+        if (upPressed) dy -= speed;
+        if (downPressed) dy += speed;
+        if (leftPressed) dx -= speed;
+        if (rightPressed) dx += speed;
 
         // Obtenir les coordonnées du centre de la hitbox
         double centerX = this.getHitbox().getLayoutX() + this.getHitbox().getWidth() / 2;
@@ -204,7 +206,6 @@ public class Joueur extends Personnage{
             lifeBarCurrent.setWidth(pv / 2);
             // Démarrez la période d'invincibilité
             demarrerInvincibilite();
-            System.out.println(degats);
         }
     }
 
