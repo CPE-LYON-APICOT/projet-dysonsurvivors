@@ -28,6 +28,7 @@ public class Monstre extends Personnage{
         chargerSprite(); // Charger la sprite du monstre
         initAnimationTimeline();
         startAnimation();
+        this.attaque = attaque;
     }
 
     // private void chargerSprite() {

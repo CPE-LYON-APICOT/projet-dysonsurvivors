@@ -134,6 +134,7 @@ public class MainApp extends Application {
     private void update() {
         // Deplacement du joueur
         joueurController.seDeplacer();
+        joueurController.isHitted(listeMonstres);
         // Met a jour les coordonnees du joueur
         joueurController.updateCoordinatesLabel(coordinatesLabel);
         joueurController.updateCoordinatesLife();
