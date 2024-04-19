@@ -195,6 +195,8 @@ public class Joueur extends Personnage{
     public void perdreVie(int degats) {
         super.perdreVie(degats);
         lifeBarCurrent.setWidth(pv/2);
+        // lifeBarCurrent.setFill(Color.PURPLE);
+        System.out.println(degats);
     }
     
 }

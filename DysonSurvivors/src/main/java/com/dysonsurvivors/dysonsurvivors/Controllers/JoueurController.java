@@ -8,7 +8,7 @@ import com.dysonsurvivors.dysonsurvivors.Models.IIsHitted;
 import com.dysonsurvivors.dysonsurvivors.Models.Monstre;
 
 import javafx.scene.input.KeyCode;
-
+import javafx.geometry.Bounds;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
@@ -95,10 +95,20 @@ public class JoueurController implements IIsHitted{
     }
 
     public void isHitted(Monstre[] listeMonstres) {
-        // Vérifie si un monstre du gamepan est en collision avec le joueur
         for (Monstre monstre : listeMonstres) {
             if (monstre != null) {
-                if (joueur.getHitbox().getBoundsInParent().intersects(monstre.getHitbox().getBoundsInParent())) {
+                Bounds joueurBounds = joueur.getHitbox().getBoundsInParent();
+                Bounds monstreBounds = monstre.getHitbox().getBoundsInParent();
+    
+                // Ajuste les limites de la hitbox du joueur
+                double joueurMinX = joueurBounds.getMinX() + joueurBounds.getWidth() / 2;
+                double joueurMinY = joueurBounds.getMinY() + joueurBounds.getHeight() / 2;
+                double joueurMaxX = joueurBounds.getMaxX() - joueurBounds.getWidth() / 2;
+                double joueurMaxY = joueurBounds.getMaxY() - joueurBounds.getHeight() / 2;
+    
+                // Vérifie la collision ajustée
+                if (joueurMinX <= monstreBounds.getMaxX() && joueurMaxX >= monstreBounds.getMinX() &&
+                    joueurMinY <= monstreBounds.getMaxY() && joueurMaxY >= monstreBounds.getMinY()) {
                     joueur.perdreVie(monstre.getAttaque());
                 }
             }
