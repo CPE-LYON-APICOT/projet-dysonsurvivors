@@ -32,8 +32,11 @@ public class Monstre extends Personnage{
     }
 
     private void chargerSprite() {
-
-        Image spriteSheet = new Image(Objects.requireNonNull(getClass().getResourceAsStream("ghost.png")));
+        
+        //ranndom entre 3 sprite :
+        String spriteImage = "ghost_"+((int) (Math.random() * 3)+1)+".png";
+        System.out.println(spriteImage);
+        Image spriteSheet = new Image(Objects.requireNonNull(getClass().getResourceAsStream(spriteImage)));
 
         // Créer une ImageView pour afficher la sprite animée
         sprite = new ImageView(spriteSheet);

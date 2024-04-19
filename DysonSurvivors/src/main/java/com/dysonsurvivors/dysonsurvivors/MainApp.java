@@ -105,11 +105,12 @@ public class MainApp extends Application {
 
 
     private void startMonsterSpawnTimer() {
-        
+       
         monsterSpawnTimeline = new Timeline(new KeyFrame(Duration.seconds(10), event -> {
-            createNewMonsterWave((int) (Math.random() * 3) + compteurDifficulty);
-            compteurDifficulty++;
-            System.out.println("Difficulté : " + compteurDifficulty);
+            if (!paramController.getIsActive()) {
+                createNewMonsterWave((int) (Math.random() * 3) + compteurDifficulty);
+                compteurDifficulty++;
+            }
         }));
         
         monsterSpawnTimeline.setCycleCount(Timeline.INDEFINITE); // Répéter indéfiniment
