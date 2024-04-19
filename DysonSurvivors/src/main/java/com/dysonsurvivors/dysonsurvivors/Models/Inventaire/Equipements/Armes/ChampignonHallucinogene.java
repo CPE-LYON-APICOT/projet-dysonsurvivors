@@ -16,16 +16,20 @@ public class ChampignonHallucinogene extends Arme{
         this.setDegats(5);
         this.setPortee(100); // En pixels
         this.setVitesseDeTir(0.5); // En ms
+        // Créer un nouvel élément graphique pour l'attaque
+        this.setHauteurHitbox(20);
+        this.setLargeurHitbox(20);
+        this.setAttaqueImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(this.getNomImage()))));
+        this.setAttaqueImageView(new ImageView(this.getAttaqueImage()));
+        this.getAttaqueImageView().setFitWidth(this.getLargeurHitbox());
+        this.getAttaqueImageView().setFitHeight(this.getHauteurHitbox());
     }
 
+    // Créer un Pane pour l'attaque et l'ajouter au gamePane
     @Override
     public void utiliser(Joueur joueur, Pane gamePane) {
-        // Créer un nouvel élément graphique pour l'attaque
-        Image attaqueImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("Mushrooms/1.png")));
-        ImageView attaqueImageView = new ImageView(attaqueImage);
-        attaqueImageView.setFitWidth(20);
-        attaqueImageView.setFitHeight(20);
-        Pane attaquePane = new Pane(attaqueImageView);
+
+        Pane attaquePane = new Pane(this.getAttaqueImageView());
 
         // Positionner l'attaque à côté du joueur dans la direction où il regarde
         double attaqueX = joueur.getHitbox().getLayoutX() + joueur.getHitbox().getWidth()/2;
