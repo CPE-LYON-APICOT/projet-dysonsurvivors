@@ -1,11 +1,8 @@
 package com.dysonsurvivors.dysonsurvivors.Controllers;
 
-import com.dysonsurvivors.dysonsurvivors.Models.IhandleKeyAction;
-import com.dysonsurvivors.dysonsurvivors.Models.Joueur;
-import com.dysonsurvivors.dysonsurvivors.Models.JoueurSingleton;
-import com.dysonsurvivors.dysonsurvivors.Models.SAzerty;
-import com.dysonsurvivors.dysonsurvivors.Models.IIsHitted;
-import com.dysonsurvivors.dysonsurvivors.Models.Monstre;
+import com.dysonsurvivors.dysonsurvivors.Models.*;
+import com.dysonsurvivors.dysonsurvivors.Models.Inventaire.Equipements.Armes.Arme;
+import com.dysonsurvivors.dysonsurvivors.Models.Inventaire.Inventaire;
 
 import javafx.animation.TranslateTransition;
 import javafx.scene.input.KeyCode;
@@ -56,43 +53,19 @@ public class JoueurController implements IIsHitted{
     }
 
     public void attaquer() {
-        double distance = 400;
+        Inventaire inventaire = joueur.getInventaire();
+        Objet[] objets = inventaire.getObjets();
 
-        long currentTime = System.currentTimeMillis();
-        // Vérifier si le cooldown est terminé
-        if (currentTime - lastAttackTime >= joueur.getAttackCooldown()) {
-            // Mettre à jour le temps de la dernière attaque
-            lastAttackTime = currentTime;
-
-            // Créer un nouvel élément graphique pour l'attaque
-            Image attaqueImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("Mushrooms/1.png")));
-            ImageView attaqueImageView = new ImageView(attaqueImage);
-            attaqueImageView.setFitWidth(20);
-            attaqueImageView.setFitHeight(20);
-            Pane attaquePane = new Pane(attaqueImageView);
-
-            // Positionner l'attaque à côté du joueur dans la direction où il regarde
-            double attaqueX = joueur.getHitbox().getLayoutX() + joueur.getHitbox().getWidth()/2;
-            double attaqueY = joueur.getHitbox().getLayoutY() + joueur.getHitbox().getHeight()/2;
-            attaquePane.setLayoutX(attaqueX);
-            attaquePane.setLayoutY(attaqueY);
-
-            // Ajouter l'attaque à gamePane
-            gamePane.getChildren().add(attaquePane);
-
-            // Calculer les composantes x et y du vecteur de direction en fonction de l'angle d'orientation du joueur
-            double directionX = Math.cos(Math.toRadians(joueur.getOrientation())) * distance; // DISTANCE est la distance que l'attaque va parcourir
-            double directionY = Math.sin(Math.toRadians(joueur.getOrientation())) * distance;
-
-            // Créer une transition pour animer l'attaque
-            TranslateTransition attaqueTransition = new TranslateTransition(Duration.seconds(1), attaquePane);
-            attaqueTransition.setByX(directionX);
-            attaqueTransition.setByY(directionY);
-            attaqueTransition.setOnFinished(event -> {
-                // Supprimer l'attaque une fois terminée
-                gamePane.getChildren().remove(attaquePane);
-            });
-            attaqueTransition.play();
+        for (Objet objet : objets) {
+            if (objet != null) {
+                long currentTime = System.currentTimeMillis();
+                // Vérifier si le cooldown est terminé et si l'objet est une arme
+                if (objet instanceof Arme && currentTime - lastAttackTime >= joueur.getAttackCooldown()) {
+                    // Mettre à jour le temps de la dernière attaque
+                    lastAttackTime = currentTime;
+                    ((Arme) objet).utiliser(joueur, gamePane);
+                }
+            }
         }
     }
 
