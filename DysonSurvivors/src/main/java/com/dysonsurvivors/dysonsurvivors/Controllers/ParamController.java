@@ -16,17 +16,19 @@ public class ParamController {
     private Pane paramPane;
     private boolean isActive;
     private JoueurController joueurController;
+    private SoundController soundController;
     private int paramWidth;
     private int paramHeight;
 
 
-    public ParamController(Pane gamePane, JoueurController joueurController) {
+    public ParamController(Pane gamePane, JoueurController joueurController, SoundController soundController) {
         this.gamePane = gamePane;
         this.paramPane = new Pane();
         this.joueurController = joueurController;
+        this.soundController = soundController;
         this.isActive = false;
         this.paramWidth = 200;
-        this.paramHeight = 220;
+        this.paramHeight = 270;
         createParamPane();
     }
 
@@ -49,18 +51,25 @@ public class ParamController {
         paramComboBox.setPromptText("Azerty");
         paramComboBox.setTranslateX(10);
         paramComboBox.setTranslateY(70);
-        
-        Button quitButton = new Button("Quitter le jeu");
-        quitButton.getStyleClass().add("param-button");
-        quitButton.setOnAction(event -> System.exit(0));
-        quitButton.setTranslateX(10);
-        quitButton.setTranslateY(175);
+
+        ComboBox<String> musicComboBox = new ComboBox<>();
+        musicComboBox.getStyleClass().add("param-combobox");
+        musicComboBox.setItems(FXCollections.observableArrayList("pdm-soundtrack", "on_pourrait_tenculer"));
+        musicComboBox.setPromptText("pdm-soundtrack");
+        musicComboBox.setTranslateX(10);
+        musicComboBox.setTranslateY(115);
 
         Button fullscreenButton = new Button("Plein écran");
         fullscreenButton.getStyleClass().add("param-button");
         fullscreenButton.setOnAction(event -> toggleFullscreen());
         fullscreenButton.setTranslateX(10);
-        fullscreenButton.setTranslateY(115); // Ajustez la position en fonction de votre mise en page
+        fullscreenButton.setTranslateY(160); // Ajustez la position en fonction de votre mise en page
+        
+        Button quitButton = new Button("Quitter le jeu");
+        quitButton.getStyleClass().add("param-button");
+        quitButton.setOnAction(event -> System.exit(0));
+        quitButton.setTranslateX(10);
+        quitButton.setTranslateY(225);
 
         paramComboBox.setOnAction(event -> {
             String selectedParam = paramComboBox.getSelectionModel().getSelectedItem();
@@ -83,7 +92,14 @@ public class ParamController {
             }
         });
 
-        paramPane.getChildren().addAll(titleLabel,KeysLabel, paramComboBox, quitButton, fullscreenButton);
+        musicComboBox.setOnAction(event -> {
+            String selectedParam = paramComboBox.getSelectionModel().getSelectedItem();
+            soundController.stopMusic();
+            soundController.setMusic(selectedParam);
+            soundController.playMusic();
+        });
+
+        paramPane.getChildren().addAll(titleLabel,KeysLabel, paramComboBox, quitButton, fullscreenButton,musicComboBox);
         paramPane.setLayoutX(JoueurSingleton.getInstance().getHitbox().getLayoutX() - 100);
         paramPane.setLayoutY(JoueurSingleton.getInstance().getHitbox().getLayoutY() - 100);
         /* Taille adaptative en fonction du contenu */

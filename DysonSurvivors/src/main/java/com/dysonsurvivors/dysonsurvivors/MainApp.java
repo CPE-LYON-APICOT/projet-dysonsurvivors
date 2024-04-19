@@ -2,8 +2,6 @@ package com.dysonsurvivors.dysonsurvivors;
 
 import com.dysonsurvivors.dysonsurvivors.Controllers.InventaireController;
 import javafx.application.Application;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.io.File;
@@ -15,6 +13,7 @@ import com.dysonsurvivors.dysonsurvivors.Models.Joueur;
 import com.dysonsurvivors.dysonsurvivors.Models.Monstre;
 import com.dysonsurvivors.dysonsurvivors.Models.Objet;
 import com.dysonsurvivors.dysonsurvivors.Controllers.ParamController;
+import com.dysonsurvivors.dysonsurvivors.Controllers.SoundController;
 
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXMLLoader;
@@ -36,6 +35,7 @@ public class MainApp extends Application {
     private Joueur joueur;
     private InventaireController inventaireController;
     private ParamController paramController;
+    private SoundController soundController;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -43,13 +43,8 @@ public class MainApp extends Application {
         // String musicFile = "src/main/resources/com/dysonsurvivors/dysonsurvivors/Music/pdm-soundtrack.mp3";
         // Créer un objet Media avec le fichier audio
         // Media sound = new Media(new File(musicFile).toURI().toString());
-        Media sound = new Media(getClass().getResource("Music/pdm-soundtrack.mp3").toExternalForm());
-        // Créer un lecteur audio
-        MediaPlayer mediaPlayer = new MediaPlayer(sound);
-        // Configurer le lecteur audio pour qu'il joue en boucle
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        // Démarrer la lecture de la musique de fond
-        mediaPlayer.play();
+        soundController = new SoundController();
+
 
         // Facultatif : mettre en pause la musique après un certain temps
         // mediaPlayer.setOnPlaying(() -> {
@@ -86,7 +81,7 @@ public class MainApp extends Application {
         joueurController = new JoueurController(GAME_WIDTH, GAME_HEIGHT, gamePane);
         joueur = joueurController.CreateJoueur();
 
-        paramController = new ParamController(gamePane, joueurController);
+        paramController = new ParamController(gamePane, joueurController, soundController);
 
         // Creation des monstres
         nbMonstresMax = 10;
@@ -120,15 +115,25 @@ public class MainApp extends Application {
     }
 
     private void startGameLoop() {
-        AnimationTimer timer = new AnimationTimer() {
+        final long startNanoTime = System.nanoTime();
+        final double desiredFPS = 120.0; // Nombre de frames par seconde désiré
+        final double desiredFrameTime = 1.0 / desiredFPS; // Temps entre chaque frame en secondes
+
+        new AnimationTimer() {
+            private long lastUpdate = startNanoTime;
+
             @Override
-            public void handle(long now) {
-                if (!paramController.getIsActive()) {
-                update();
+            public void handle(long currentNanoTime) {
+                double elapsedTime = (currentNanoTime - lastUpdate) / 1e9; // Temps écoulé depuis la dernière frame en secondes
+
+                if (elapsedTime > desiredFrameTime) {
+                    lastUpdate = currentNanoTime;
+
+                    // Mettez à jour le jeu
+                    update();
                 }
             }
-        };
-        timer.start();
+        }.start();
     }
 
     private void update() {
