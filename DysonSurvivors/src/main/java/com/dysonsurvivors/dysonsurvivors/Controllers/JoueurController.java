@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 
@@ -113,7 +114,7 @@ public class JoueurController implements IIsHitted{
         this.handleKeyAction = handleKeyAction;
     }
 
-    public void isHitted(Monstre[] listeMonstres) {
+public void isHitted(ArrayList<Monstre> listeMonstres) {
         for (Monstre monstre : listeMonstres) {
             if (monstre != null) {
                 Bounds joueurBounds = joueur.getHitbox().getBoundsInParent();
