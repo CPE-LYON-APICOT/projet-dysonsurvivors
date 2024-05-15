@@ -84,6 +84,7 @@ public class MainApp extends Application {
 
         inventaireController = new InventaireController(joueur.getInventaire(), paramController.getParamPane());
         inventaireController.afficherInventaire();
+        paramController.setInvController(inventaireController);
 
         // Event handlers for key presses and releases
         scene.setOnKeyPressed(event -> {

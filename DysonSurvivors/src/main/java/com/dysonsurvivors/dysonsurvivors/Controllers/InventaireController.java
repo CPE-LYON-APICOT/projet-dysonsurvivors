@@ -20,11 +20,15 @@ public class InventaireController {
 
     }
 
+    public void setInventaire(Inventaire inventaire) {
+        this.inventaire = inventaire;
+    }
+
     public void afficherInventaire() {
         inventairePane.getChildren().clear(); // Effacer le contenu précédent de l'inventaire
         inventairePane.getStyleClass().add("inventaire-pane");
-        inventairePane.setLayoutX(-gamePane.getLayoutX());
-        inventairePane.setLayoutY(-gamePane.getLayoutY());
+        inventairePane.setLayoutX(50);
+        inventairePane.setLayoutY(-50);
 
         // Parcourir les objets dans l'inventaire et les afficher sur l'écran de jeu
         Objet[] objets = inventaire.getObjets(); // Récupérer les objets de l'inventaire
@@ -32,7 +36,6 @@ public class InventaireController {
         double y = 0; // Position y initiale
         double itemWidth = 30; // Largeur de l'objet
         double itemHeight = 30; // Hauteur de l'objet
-
         for (Objet objet : objets) {
             if (objet != null) {
                 // Charger l'image de l'objet

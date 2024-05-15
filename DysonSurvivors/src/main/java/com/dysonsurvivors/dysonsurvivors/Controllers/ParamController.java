@@ -23,6 +23,7 @@ public class ParamController {
     private SoundController soundController;
     private int paramWidth;
     private int paramHeight;
+    private InventaireController inventaireController;
 
 
     public ParamController(Pane gamePane, JoueurController joueurController, SoundController soundController) {
@@ -34,6 +35,10 @@ public class ParamController {
         this.paramWidth = 200;
         this.paramHeight = 270;
         createParamPane();
+    }
+
+    public void setInvController(InventaireController inventaireController){
+        this.inventaireController = inventaireController;
     }
 
     private void createParamPane() {
@@ -136,6 +141,7 @@ public class ParamController {
                 paramPane.setLayoutX(JoueurSingleton.getInstance().getHitbox().getLayoutX() - 100);
                 paramPane.setLayoutY(JoueurSingleton.getInstance().getHitbox().getLayoutY() - 100);
                 afficherParametres();
+                inventaireController.afficherInventaire();
             }
         }
     }

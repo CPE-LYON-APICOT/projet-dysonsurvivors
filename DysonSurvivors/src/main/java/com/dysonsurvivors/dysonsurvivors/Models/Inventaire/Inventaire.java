@@ -13,7 +13,7 @@ public class Inventaire {
         for(int i = 0; i < objets.length; i++){
             if(objets[i] == null){
                 objets[i] = objet;
-                break;
+                return;
             }
         }
     }
@@ -22,7 +22,7 @@ public class Inventaire {
         for(int i = 0; i < objets.length; i++){
             if(objets[i] == objet){
                 objets[i] = null;
-                break;
+                return;
             }
         }
     }
