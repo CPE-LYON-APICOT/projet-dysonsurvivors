@@ -39,4 +39,9 @@ public abstract class Personnage{
     public void perdreVie(int degats) {
         pv -= degats;
     }
+
+    /*FORCE, PERCEPTION, ENDURANCE, CHARISME, INTELLIGENCE, AGILITE, CHANCE*/
+    public Integer getStat(Stats stat) {
+        return stats.get(stat);
+    }
 }

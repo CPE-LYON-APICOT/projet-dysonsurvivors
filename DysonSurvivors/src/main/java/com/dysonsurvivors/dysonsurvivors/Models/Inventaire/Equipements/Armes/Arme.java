@@ -2,9 +2,12 @@ package com.dysonsurvivors.dysonsurvivors.Models.Inventaire.Equipements.Armes;
 
 import com.dysonsurvivors.dysonsurvivors.Models.Inventaire.Equipements.Equipement;
 import com.dysonsurvivors.dysonsurvivors.Models.Joueur;
+import com.dysonsurvivors.dysonsurvivors.Models.Monstre;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+
+import java.util.ArrayList;
 
 public class Arme extends Equipement {
     private double degats;
@@ -20,8 +23,8 @@ public class Arme extends Equipement {
         super(nom, description, nomImage);
     }
 
-    public double getDegats() {
-        return degats;
+    public int getDegats() {
+        return (int) degats;
     }
 
     public void setDegats(double degats) {
@@ -76,7 +79,7 @@ public class Arme extends Equipement {
         this.largeurHitbox = largeurHitbox;
     }
 
-    public void utiliser(Joueur joueur, Pane gamePane) {
+    public void utiliser(Joueur joueur, Pane gamePane, ArrayList<Monstre> listeMonstres) {
         // A définir dans les classes filles
     }
 }

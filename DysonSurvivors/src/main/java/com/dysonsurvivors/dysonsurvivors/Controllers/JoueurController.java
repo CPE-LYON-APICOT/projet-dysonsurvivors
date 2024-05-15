@@ -25,13 +25,15 @@ public class JoueurController implements IIsHitted{
     private Pane gamePane;
     private IhandleKeyAction handleKeyAction;
     private long lastAttackTime;
+    private ArrayList<Monstre> listeMonstres;
 
-    public JoueurController(int GAME_WIDTH, int GAME_HEIGHT, Pane gamePane) {
+    public JoueurController(int GAME_WIDTH, int GAME_HEIGHT, Pane gamePane, ArrayList<Monstre> listeMonstres) {
         this.GAME_WIDTH = GAME_WIDTH;
         this.GAME_HEIGHT = GAME_HEIGHT;
         this.gamePane = gamePane;
         this.handleKeyAction = new SAzerty();
         lastAttackTime = 0;
+        this.listeMonstres = listeMonstres;
     }
 
     public Joueur CreateJoueur() {
@@ -64,7 +66,7 @@ public class JoueurController implements IIsHitted{
                 if (objet instanceof Arme && currentTime - lastAttackTime >= joueur.getAttackCooldown()) {
                     // Mettre à jour le temps de la dernière attaque
                     lastAttackTime = currentTime;
-                    ((Arme) objet).utiliser(joueur, gamePane);
+                    ((Arme) objet).utiliser(joueur, gamePane, listeMonstres);
                 }
             }
             // TODO : pour chaque objet de l'inventaire, vérifier s'il touche un monstre

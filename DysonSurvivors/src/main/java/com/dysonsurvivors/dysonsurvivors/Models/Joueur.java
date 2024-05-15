@@ -54,6 +54,15 @@ public class Joueur extends Personnage{
         inventaire = new Inventaire();
         this.invincible = false; // Le joueur n'est pas invincible au début
         initInvincibleTimeline(); // Initialisez la timeline d'invincibilité
+
+        // Stats par défaut
+        stats.put(Stats.FORCE, 5);
+        stats.put(Stats.PERCEPTION, 3);
+        stats.put(Stats.ENDURANCE, 4);
+        stats.put(Stats.CHARISME, 10);
+        stats.put(Stats.INTELLIGENCE, 1);
+        stats.put(Stats.AGILITE, 6);
+        stats.put(Stats.CHANCE, 1);
     }
 
     // Méthodes pour mettre à jour l'état des touches de déplacement
@@ -252,5 +261,4 @@ public class Joueur extends Personnage{
     public void setOrientation(double orientation) {
         this.orientation = orientation;
     }
-    
 }

@@ -58,6 +58,7 @@ public class Monstre extends Personnage{
     public int getAttaque() {
         return attaque;
     }
+
     public void seDeplacer(Joueur joueur) {
         deplacement.seDeplacer(joueur,this);
     }
@@ -103,5 +104,13 @@ public class Monstre extends Personnage{
 
     private void changerFrameAnimation(int frameX, int frameY) {
         sprite.setViewport(new Rectangle2D(frameX * 48, frameY * 48, 48, 48));
+    }
+
+    public void prendreDegats(int degats) {
+        this.pv -= degats;
+    }
+
+    public int getPv() {
+        return pv;
     }
 }

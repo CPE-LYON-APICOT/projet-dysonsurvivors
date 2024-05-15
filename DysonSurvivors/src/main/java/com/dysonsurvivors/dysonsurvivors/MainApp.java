@@ -64,21 +64,20 @@ public class MainApp extends Application {
 
         coordinatesLabel = (Label) loader.getNamespace().get("coordinatesLabel");
 
-
-        // Creation du joueur
-        joueurController = new JoueurController(GAME_WIDTH, GAME_HEIGHT, gamePane);
-        joueur = joueurController.CreateJoueur();
-
-        paramController = new ParamController(gamePane, joueurController, soundController);
-
         // Creation des monstres
         // nbMonstresMax = 100;
         listeMonstres = new ArrayList<>();
         monstreController = new MonstreController(listeMonstres, GAME_WIDTH, GAME_HEIGHT, gamePane);
         // monstreController.creerMonstre(20);
 
+        // Creation du joueur
+        joueurController = new JoueurController(GAME_WIDTH, GAME_HEIGHT, gamePane, listeMonstres);
+        joueur = joueurController.CreateJoueur();
+
+        paramController = new ParamController(gamePane, joueurController, soundController);
+
         // Création d'objets pour l'ajouter à l'inventaire*
-        for (int i = 1; i < 5; i++) {
+        for (int i = 1; i < 2; i++) {
             Objet objet = new ChampignonHallucinogene();
             joueur.getInventaire().ajouterObjet(objet);
         }
@@ -161,6 +160,10 @@ public class MainApp extends Application {
         for (Monstre monstre : listeMonstres) {
             if (monstre != null) {
                 monstre.seDeplacer(joueurController.getJoueur());
+                // Verifie si le monstre a des points de vie
+                if (monstre.getPv() <= 0) {
+                    monstreController.tuerMonstre(monstre);
+                }
             }
         }
         // Met a jour la position de l'inventaire
