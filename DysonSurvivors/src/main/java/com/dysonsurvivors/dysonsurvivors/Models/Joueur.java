@@ -280,7 +280,7 @@ public class Joueur extends Personnage{
         if (this.exp >= expMax) {
             this.exp -= expMax;
             expMax += 50;
-            niveau++;
+            this.gagnerUnNiveau();
         }
         expMaxBar.setWidth(expMax);
         expCurrentBar.setWidth(this.exp);
@@ -325,5 +325,25 @@ public class Joueur extends Personnage{
 
     public void setOrientation(double orientation) {
         this.orientation = orientation;
+    }
+
+    public void gagnerUnNiveau() {
+        niveau++;
+
+        // Augmenter les stats du joueur
+        stats.put(Stats.FORCE, stats.get(Stats.FORCE) + 2);
+        stats.put(Stats.PERCEPTION, stats.get(Stats.PERCEPTION) + 1);
+        stats.put(Stats.ENDURANCE, stats.get(Stats.ENDURANCE) + 1);
+        stats.put(Stats.CHARISME, stats.get(Stats.CHARISME) + 1);
+        stats.put(Stats.INTELLIGENCE, stats.get(Stats.INTELLIGENCE) + 1);
+        stats.put(Stats.AGILITE, stats.get(Stats.AGILITE) + 1);
+        stats.put(Stats.CHANCE, stats.get(Stats.CHANCE) + 1);
+
+        // Augmenter les PV max du joueur
+        pvMax += 5;
+        pv = pvMax;
+        lifeBarMax.setWidth(pv / 2);
+        lifeBarCurrent.setWidth(pv / 2);
+        lifeBarBorder.setWidth(pv / 2 + 4);
     }
 }

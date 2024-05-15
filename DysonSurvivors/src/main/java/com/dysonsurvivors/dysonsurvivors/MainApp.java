@@ -31,6 +31,7 @@ public class MainApp extends Application {
     private static int GAME_WIDTH = 960;
     private static int GAME_HEIGHT = 540;
     private Label coordinatesLabel;
+    private Label niveauLabel;
     private MonstreController monstreController;
     private ArrayList<Monstre> listeMonstres;
     private int nbMonstresMax;
@@ -62,7 +63,12 @@ public class MainApp extends Application {
 
         Pane gamePane = (Pane) root.lookup("#gamePane");
 
-        coordinatesLabel = (Label) loader.getNamespace().get("coordinatesLabel");
+        /*coordinatesLabel = (Label) loader.getNamespace().get("coordinatesLabel");*/
+
+        // Affiche le niveau du joueur
+        niveauLabel = new Label("Niveau : 1");
+        niveauLabel.getStyleClass().add("niveauLabel");
+        gamePane.getChildren().add(niveauLabel);
 
         // Creation des monstres
         // nbMonstresMax = 100;
@@ -150,7 +156,8 @@ public class MainApp extends Application {
         joueurController.seDeplacer();
         joueurController.isHitted(listeMonstres);
         // Met a jour les coordonnees du joueur
-        joueurController.updateCoordinatesLabel(coordinatesLabel);
+        /*joueurController.updateCoordinatesLabel(coordinatesLabel);*/
+        joueurController.updateNiveauLabel(niveauLabel);
         joueurController.updateCoordinatesLife();
         joueurController.updateCoordinateExp();
         // Centre la camera sur le joueur

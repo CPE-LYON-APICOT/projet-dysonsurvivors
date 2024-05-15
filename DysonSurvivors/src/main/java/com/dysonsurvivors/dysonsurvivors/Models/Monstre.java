@@ -111,7 +111,6 @@ public class Monstre extends Personnage{
     }
 
     public void die() {
-        stopAnimation();
         lootTable.dropItem();
     }
 

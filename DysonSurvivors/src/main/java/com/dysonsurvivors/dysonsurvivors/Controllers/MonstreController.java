@@ -55,12 +55,12 @@ public class MonstreController {
 
     public void tuerMonstre(Monstre monstre) {
         // Enleve le monstre de la liste de monstres et du gamePane
-        monstre.die();
         gamePane.getChildren().remove(monstre.getHitbox());
         for (int i = 0; i < listeMonstres.size(); i++) {
             if (listeMonstres.get(i) == monstre) {
                 listeMonstres.remove(i);
             }
         }
+        monstre.die();
     }
 }

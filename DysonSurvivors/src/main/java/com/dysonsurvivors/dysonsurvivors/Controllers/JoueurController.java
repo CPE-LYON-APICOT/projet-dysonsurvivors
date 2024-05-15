@@ -90,6 +90,15 @@ public class JoueurController implements IIsHitted{
                 Math.round(playerY) + ")");
     }
 
+    public void updateNiveauLabel(Label niveauLabel) {
+        double playerX = joueur.getHitbox().getLayoutX() + joueur.getHitbox().getWidth()/2;
+        double playerY = joueur.getHitbox().getLayoutY() + joueur.getHitbox().getHeight()/2;
+        niveauLabel.setLayoutY(playerY + GAME_HEIGHT/2 - joueur.getHitbox().getHeight()/2 - 40);
+        niveauLabel.setLayoutX(playerX - GAME_WIDTH/2 - 30);
+
+        niveauLabel.setText("Niveau : " + joueur.getNiveau());
+    }
+
     public void updateCoordinatesLife() {
         double playerX = joueur.getHitbox().getLayoutX() + joueur.getHitbox().getWidth()/2;
         double playerY = joueur.getHitbox().getLayoutY() + joueur.getHitbox().getHeight()/2;
