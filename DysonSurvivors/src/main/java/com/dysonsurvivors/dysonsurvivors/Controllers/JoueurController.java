@@ -67,6 +67,8 @@ public class JoueurController implements IIsHitted{
                     ((Arme) objet).utiliser(joueur, gamePane);
                 }
             }
+            // TODO : pour chaque objet de l'inventaire, vérifier s'il touche un monstre
+
         }
     }
 

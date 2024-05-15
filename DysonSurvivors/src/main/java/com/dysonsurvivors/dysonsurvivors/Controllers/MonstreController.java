@@ -4,6 +4,7 @@ import com.dysonsurvivors.dysonsurvivors.Models.Factory.FMonstre;
 
 import java.util.ArrayList;
 
+import com.dysonsurvivors.dysonsurvivors.Models.IIsHitted;
 import com.dysonsurvivors.dysonsurvivors.Models.Monstre;
 import javafx.scene.layout.Pane;
 
@@ -59,4 +60,13 @@ public class MonstreController {
             }
         }
     }
+
+    /*public void isHitted() {
+        // Boucle qui verifie si le joueur est touche par un monstre
+        for (Monstre monstre : listeMonstres) {
+            if (monstre.getHitbox().getBoundsInParent().intersects(joueur.getHitbox().getBoundsInParent())) {
+                joueur.prendreDegats(monstre.getAtk());
+            }
+        }
+    }*/
 }

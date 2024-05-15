@@ -42,7 +42,7 @@ public class Joueur extends Personnage{
     public Joueur(String nom, int pvMax) {
         super(nom, pvMax);
         speed = 1;
-        attackCooldown = 1000; // millisecondes
+        attackCooldown = 100; // millisecondes
         chargerSprite();
         initAnimationTimeline();
         lifeBarMax = new Rectangle(0, 0, pvMax/2, 3);
