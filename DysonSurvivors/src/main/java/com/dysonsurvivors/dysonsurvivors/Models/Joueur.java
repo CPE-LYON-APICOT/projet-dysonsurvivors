@@ -15,7 +15,8 @@ import java.util.Objects;
 
 public class Joueur extends Personnage{
     private Inventaire inventaire;
-    private int XP;
+    private int exp;
+    private int expMax;
     private int niveau;
     private ImageView sprite;
     // Déclarer une timeline pour l'animation
@@ -30,6 +31,9 @@ public class Joueur extends Personnage{
     private Rectangle lifeBarMax;
     private Rectangle lifeBarCurrent;
     private Rectangle lifeBarBorder;
+    private Rectangle expMaxBar;
+    private Rectangle expCurrentBar;
+    private Rectangle expBorder;
     private double speed;
     private double orientation;
     private long attackCooldown;
@@ -45,15 +49,25 @@ public class Joueur extends Personnage{
         attackCooldown = 100; // millisecondes
         chargerSprite();
         initAnimationTimeline();
+
+        // Barre de vie
         lifeBarMax = new Rectangle(0, 0, pvMax/2, 3);
         lifeBarCurrent = new Rectangle(0, 0, pv/2, 3);
         lifeBarBorder = new Rectangle(0, 0, pv/2+4, 3+4);
         lifeBarMax.setFill(Color.BLACK);
         lifeBarCurrent.setFill(Color.RED);
         lifeBarBorder.setFill(Color.GOLD);
-        inventaire = new Inventaire();
-        this.invincible = false; // Le joueur n'est pas invincible au début
-        initInvincibleTimeline(); // Initialisez la timeline d'invincibilité
+
+        // Barre d'expérience
+        exp = 0;
+        expMax = 100;
+        niveau = 1;
+        expMaxBar = new Rectangle(0, 0, 0, 3);
+        expCurrentBar = new Rectangle(0, 0, 0, 3);
+        expBorder = new Rectangle(0, 0, 0, 3+4);
+        expMaxBar.setFill(Color.BLACK);
+        expCurrentBar.setFill(Color.LIGHTBLUE);
+        expBorder.setFill(Color.GOLD);
 
         // Stats par défaut
         stats.put(Stats.FORCE, 5);
@@ -63,6 +77,10 @@ public class Joueur extends Personnage{
         stats.put(Stats.INTELLIGENCE, 1);
         stats.put(Stats.AGILITE, 6);
         stats.put(Stats.CHANCE, 1);
+
+        inventaire = new Inventaire();
+        this.invincible = false; // Le joueur n'est pas invincible au début
+        initInvincibleTimeline(); // Initialisez la timeline d'invincibilité
     }
 
     // Méthodes pour mettre à jour l'état des touches de déplacement
@@ -92,10 +110,6 @@ public class Joueur extends Personnage{
 
     public long getAttackCooldown() {
         return attackCooldown;
-    }
-
-    public void attaquer() {
-        System.out.println("Joueur attaque");
     }
 
     public void seDeplacer() {
@@ -223,6 +237,57 @@ public class Joueur extends Personnage{
 
     public void setLifeBarBorder(Rectangle lifeBarBorder) {
         this.lifeBarCurrent = lifeBarBorder;
+    }
+
+    public Rectangle getExpMaxBar() {
+        return expMaxBar;
+    }
+
+    public Rectangle getExpCurrentBar() {
+        return expCurrentBar;
+    }
+
+    public void setExpCurrentBar(Rectangle expCurrentBar) {
+        this.expCurrentBar = expCurrentBar;
+    }
+
+    public Rectangle getExpBorder() {
+        return expBorder;
+    }
+
+    public void setExpBorder(Rectangle expBorder) {
+        this.expBorder = expBorder;
+    }
+
+    public int getExp() {
+        return exp;
+    }
+
+    public void setExp(int exp) {
+        this.exp = exp;
+    }
+
+    public int getExpMax() {
+        return expMax;
+    }
+
+    public void setExpMax(int expMax) {
+        this.expMax = expMax;
+    }
+
+    public void gagnerExp(int exp) {
+        this.exp += exp;
+        if (this.exp >= expMax) {
+            this.exp -= expMax;
+            expMax += 50;
+            niveau++;
+        }
+        expMaxBar.setWidth(expMax);
+        expCurrentBar.setWidth(this.exp);
+    }
+
+    public int getNiveau() {
+        return niveau;
     }
 
     public Inventaire getInventaire() {

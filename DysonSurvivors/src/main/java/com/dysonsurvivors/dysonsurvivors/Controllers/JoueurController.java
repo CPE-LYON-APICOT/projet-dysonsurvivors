@@ -40,10 +40,21 @@ public class JoueurController implements IIsHitted{
         joueur = JoueurSingleton.getInstance();
         joueur.getHitbox().setLayoutX(GAME_WIDTH / 2);
         joueur.getHitbox().setLayoutY(GAME_HEIGHT / 2);
+
+        // Ajouter le joueur à la gamePane
         gamePane.getChildren().add(joueur.getHitbox());
+
+        // Ajouter la barre de vie du joueur à la gamePane
         gamePane.getChildren().add(joueur.getLifeBarBorder());
         gamePane.getChildren().add(joueur.getLifeBarMax());
         gamePane.getChildren().add(joueur.getLifeBarCurrent());
+
+
+
+        // Ajouter la barre d'expérience du joueur à la gamePane
+        gamePane.getChildren().add(joueur.getExpBorder());
+        gamePane.getChildren().add(joueur.getExpMaxBar());
+        gamePane.getChildren().add(joueur.getExpCurrentBar());
         
         return joueur;
     }
@@ -69,8 +80,6 @@ public class JoueurController implements IIsHitted{
                     ((Arme) objet).utiliser(joueur, gamePane, listeMonstres);
                 }
             }
-            // TODO : pour chaque objet de l'inventaire, vérifier s'il touche un monstre
-
         }
     }
 
@@ -90,6 +99,23 @@ public class JoueurController implements IIsHitted{
         joueur.getLifeBarCurrent().setLayoutX(playerX - joueur.getLifeBarMax().getWidth()/2);
         joueur.getLifeBarBorder().setLayoutY(playerY + joueur.getHitbox().getHeight()/2+3);
         joueur.getLifeBarBorder().setLayoutX(playerX - joueur.getLifeBarMax().getWidth()/2-2);
+    }
+
+    public void updateCoordinateExp() {
+        // Redimensionner et positionner la barre d'expérience du joueur pour qu'elle soit de la taille de la fenêtre
+        double playerX = joueur.getHitbox().getLayoutX() + joueur.getHitbox().getWidth()/2;
+        double playerY = joueur.getHitbox().getLayoutY() + joueur.getHitbox().getHeight()/2;
+
+        joueur.getExpBorder().setWidth(GAME_WIDTH);
+        joueur.getExpMaxBar().setWidth(GAME_WIDTH - 4);
+        joueur.getExpCurrentBar().setWidth((GAME_WIDTH - 4) * joueur.getExp() / joueur.getExpMax());
+
+        joueur.getExpMaxBar().setLayoutY(playerY + GAME_HEIGHT/2 - joueur.getHitbox().getHeight()/2 - 10);
+        joueur.getExpMaxBar().setLayoutX(playerX - GAME_WIDTH/2 - 30);
+        joueur.getExpCurrentBar().setLayoutY(playerY + GAME_HEIGHT/2 - joueur.getHitbox().getHeight()/2 - 10);
+        joueur.getExpCurrentBar().setLayoutX(playerX - GAME_WIDTH/2 - 30);
+        joueur.getExpBorder().setLayoutY(playerY + GAME_HEIGHT/2 - joueur.getHitbox().getHeight()/2 - 12);
+        joueur.getExpBorder().setLayoutX(playerX - GAME_WIDTH/2 - 32);
     }
 
     public void centerCameraOnPlayer() {

@@ -151,6 +151,7 @@ public class MainApp extends Application {
         // Met a jour les coordonnees du joueur
         joueurController.updateCoordinatesLabel(coordinatesLabel);
         joueurController.updateCoordinatesLife();
+        joueurController.updateCoordinateExp();
         // Centre la camera sur le joueur
         joueurController.centerCameraOnPlayer();
         // Fait attaquer le joueur
@@ -162,6 +163,7 @@ public class MainApp extends Application {
                 monstre.seDeplacer(joueurController.getJoueur());
                 // Verifie si le monstre a des points de vie
                 if (monstre.getPv() <= 0) {
+                    joueur.gagnerExp(monstre.getDropExp());
                     monstreController.tuerMonstre(monstre);
                 }
             }

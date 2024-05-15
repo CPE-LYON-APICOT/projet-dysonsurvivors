@@ -3,11 +3,12 @@ package com.dysonsurvivors.dysonsurvivors.Models.Factory;
 import com.dysonsurvivors.dysonsurvivors.Models.*;
 
 public class FMonstre {
-    public Monstre creerMonstre(int niveau,int atk, String spriteImage, LootTable lootTable) {
+    public Monstre creerMonstre(int niveau, int atk, String spriteImage, LootTable lootTable) {
         String nom = "Monstre";
         int pvMax = 10 * niveau;
         int attaque = atk * niveau;
-        return new Monstre(nom, pvMax, genererDeplacement(), attaque, spriteImage, lootTable);
+        int dropExp = 10 * niveau;
+        return new Monstre(nom, pvMax, genererDeplacement(), attaque, spriteImage, lootTable, dropExp);
     }
 
     private IDeplacementMonstre genererDeplacement() {
@@ -22,7 +23,4 @@ public class FMonstre {
         }
 
     }
-
-
-
 }

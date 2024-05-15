@@ -22,9 +22,10 @@ public class Monstre extends Personnage{
     private int oldY = 0;
     private String spriteImage;
     private LootTable lootTable;
-    int attaque;
+    private int dropExp;
+    private int attaque;
 
-    public Monstre(String nom, int pvMax, IDeplacementMonstre deplacement,int attaque, String spriteImage, LootTable lootTable) {
+    public Monstre(String nom, int pvMax, IDeplacementMonstre deplacement,int attaque, String spriteImage, LootTable lootTable, int dropExp) {
         super(nom, pvMax);
         this.deplacement = deplacement;
         this.spriteImage = spriteImage;
@@ -33,6 +34,7 @@ public class Monstre extends Personnage{
         startAnimation();
         this.attaque = attaque;
         this.lootTable = lootTable;
+        this.dropExp = dropExp;
     }
 
     private void chargerSprite() {
@@ -119,5 +121,13 @@ public class Monstre extends Personnage{
 
     public int getPv() {
         return pv;
+    }
+
+    public int getDropExp() {
+        return dropExp;
+    }
+
+    public void setDropExp(int dropExp) {
+        this.dropExp = dropExp;
     }
 }
