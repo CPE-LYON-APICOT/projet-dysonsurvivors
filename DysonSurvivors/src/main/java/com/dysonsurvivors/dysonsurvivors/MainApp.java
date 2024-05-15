@@ -4,11 +4,10 @@ import com.dysonsurvivors.dysonsurvivors.Controllers.InventaireController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import java.io.File;
 
 import com.dysonsurvivors.dysonsurvivors.Controllers.JoueurController;
 import com.dysonsurvivors.dysonsurvivors.Controllers.MonstreController;
-import com.dysonsurvivors.dysonsurvivors.Models.Inventaire.Equipements.Armes.ChampignonHallucinogene;
+import com.dysonsurvivors.dysonsurvivors.Models.Inventaire.Equipements.Armes.Bulle;
 import com.dysonsurvivors.dysonsurvivors.Models.Joueur;
 import com.dysonsurvivors.dysonsurvivors.Models.Monstre;
 import com.dysonsurvivors.dysonsurvivors.Models.Objet;
@@ -84,7 +83,7 @@ public class MainApp extends Application {
 
         // Création d'objets pour l'ajouter à l'inventaire*
         for (int i = 1; i < 2; i++) {
-            Objet objet = new ChampignonHallucinogene();
+            Objet objet = new Bulle();
             joueur.getInventaire().ajouterObjet(objet);
         }
 

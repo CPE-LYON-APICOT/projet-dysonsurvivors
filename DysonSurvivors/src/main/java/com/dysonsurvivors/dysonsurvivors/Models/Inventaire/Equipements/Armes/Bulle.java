@@ -10,16 +10,14 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Objects;
 
 import com.dysonsurvivors.dysonsurvivors.Models.Monstre;
 
-public class ChampignonHallucinogene extends Arme{
+public class Bulle extends Arme{
 
-    public ChampignonHallucinogene() {
-        super("Champignon Hallucinogene", "Un champignon hallucinogène qui vous permettra de vous échapper de la réalité", "Mushrooms/1.png");
+    public Bulle() {
+        super("Bulle", "Une super bulle qui mouille super bien !", "Mushrooms/1.png");  // Mushrooms/1.png pour le champignon
         this.setDegats(5);
         this.setPortee(100); // En pixels
         this.setVitesseDeTir(0.3); // En ms
@@ -43,7 +41,7 @@ public class ChampignonHallucinogene extends Arme{
             Pane attaquePane = new Pane(attaqueImageView);
 
             // Positionner l'attaque à côté du joueur dans la direction où il regarde
-            double attaqueX = joueur.getHitbox().getLayoutX() + joueur.getHitbox().getWidth() / 2;
+            double attaqueX = joueur.getHitbox().getLayoutX() + joueur.getHitbox().getWidth() / 2 - 10;
             double attaqueY = joueur.getHitbox().getLayoutY() + joueur.getHitbox().getHeight() / 2;
             attaquePane.setLayoutX(attaqueX);
             attaquePane.setLayoutY(attaqueY);

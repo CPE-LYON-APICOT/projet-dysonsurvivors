@@ -1,7 +1,7 @@
 package com.dysonsurvivors.dysonsurvivors.Controllers;
 
 import com.dysonsurvivors.dysonsurvivors.Models.Factory.FMonstre;
-import com.dysonsurvivors.dysonsurvivors.Models.Inventaire.Equipements.Armes.ChampignonHallucinogene;
+import com.dysonsurvivors.dysonsurvivors.Models.Inventaire.Equipements.Armes.Bulle;
 
 import java.util.ArrayList;
 
@@ -30,7 +30,7 @@ public class MonstreController {
         // Boucle qui fait des monstres et les ajoute a une liste de monstres:
         LootTable lootTable = new LootTable(gamePane);
         String sprite = "ghost_1.png"; //Par defaut
-        lootTable.addItem(new ChampignonHallucinogene(), 0.3);
+        lootTable.addItem(new Bulle(), 0.3);
         for (int i = 0; i < nbMonstres; i++) {
             int niveau = (int) (Math.random() * 3) + 1+difficulty;
             int atk = 1 + difficulty;
