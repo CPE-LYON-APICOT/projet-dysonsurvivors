@@ -34,20 +34,19 @@ public class MonstreController {
         for (int i = 0; i < nbMonstres; i++) {
             int niveau = (int) (Math.random() * 3) + 1+difficulty;
             int atk = 1 + difficulty;
-            sprite = "ghost_"+((int) (Math.random() * 3)+1)+".png";
+            System.out.println(niveau);
+            if (niveau > 3) {
+                System.out.println("in");
+                sprite = "ghost_"+((int) (Math.random() * 3)+1)+"_2.png"; 
+            }else{
+               sprite = "ghost_"+((int) (Math.random() * 3)+1)+".png"; 
+            }
+            
             Monstre monstre = monstreFactory.creerMonstre(niveau ,atk, sprite, lootTable);
             // fais apparaitre les monstres a des positions aleatoires
 
             int spawnX = (int) (Math.random() * gamePane.getWidth());
             int spawnY = (int) (Math.random() * gamePane.getHeight());
-
-            // // Verifie si le monstre n'apparait pas sur le joueur
-            // while (spawnX > GAME_WIDTH / 2 - 50 && spawnX < GAME_WIDTH / 2 + 50 && spawnY > GAME_HEIGHT / 2 - 50
-            //         && spawnY < GAME_HEIGHT / 2 + 50) {
-            //     spawnX = (int) (Math.random() * gamePane.getWidth());
-            //     spawnY = (int) (Math.random() * gamePane.getHeight());
-            // }
-
 
             monstre.getHitbox().setLayoutX(spawnX);
             monstre.getHitbox().setLayoutY(spawnY);
