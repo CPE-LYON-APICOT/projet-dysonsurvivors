@@ -20,15 +20,19 @@ public class Monstre extends Personnage{
     private int currentFrame = 0;
     private int oldX = 0;
     private int oldY = 0;
+    private String spriteImage;
+    private LootTable lootTable;
     int attaque;
 
-    public Monstre(String nom, int pvMax, IDeplacementMonstre deplacement,int attaque) {
+    public Monstre(String nom, int pvMax, IDeplacementMonstre deplacement,int attaque, String spriteImage, LootTable lootTable) {
         super(nom, pvMax);
         this.deplacement = deplacement;
+        this.spriteImage = spriteImage;
         chargerSprite(); // Charger la sprite du monstre
         initAnimationTimeline();
         startAnimation();
         this.attaque = attaque;
+        this.lootTable = lootTable;
     }
 
     private void chargerSprite() {
@@ -104,6 +108,11 @@ public class Monstre extends Personnage{
 
     private void changerFrameAnimation(int frameX, int frameY) {
         sprite.setViewport(new Rectangle2D(frameX * 48, frameY * 48, 48, 48));
+    }
+
+    public void die() {
+        stopAnimation();
+        lootTable.dropItem();
     }
 
     public void prendreDegats(int degats) {
