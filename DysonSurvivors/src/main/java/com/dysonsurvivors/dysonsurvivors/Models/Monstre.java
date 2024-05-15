@@ -20,22 +20,23 @@ public class Monstre extends Personnage{
     private int currentFrame = 0;
     private int oldX = 0;
     private int oldY = 0;
+    private String spriteImage;
+    private LootTable lootTable;
     int attaque;
 
-    public Monstre(String nom, int pvMax, IDeplacementMonstre deplacement,int attaque) {
+    public Monstre(String nom, int pvMax, IDeplacementMonstre deplacement,int attaque, String spriteImage, LootTable lootTable) {
         super(nom, pvMax);
         this.deplacement = deplacement;
+        this.spriteImage = spriteImage;
         chargerSprite(); // Charger la sprite du monstre
         initAnimationTimeline();
         startAnimation();
         this.attaque = attaque;
+        this.lootTable = lootTable;
     }
 
     private void chargerSprite() {
-        
-        //ranndom entre 3 sprite :
-        String spriteImage = "ghost_"+((int) (Math.random() * 3)+1)+".png";
-        Image spriteSheet = new Image(Objects.requireNonNull(getClass().getResourceAsStream(spriteImage)));
+        Image spriteSheet = new Image(Objects.requireNonNull(getClass().getResourceAsStream(this.spriteImage)));
 
         // Créer une ImageView pour afficher la sprite animée
         sprite = new ImageView(spriteSheet);
@@ -103,5 +104,10 @@ public class Monstre extends Personnage{
 
     private void changerFrameAnimation(int frameX, int frameY) {
         sprite.setViewport(new Rectangle2D(frameX * 48, frameY * 48, 48, 48));
+    }
+
+    public void die() {
+        stopAnimation();
+        lootTable.dropItem();
     }
 }
