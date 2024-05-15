@@ -1,10 +1,11 @@
 package com.dysonsurvivors.dysonsurvivors.Controllers;
 
 import com.dysonsurvivors.dysonsurvivors.Models.Factory.FMonstre;
+import com.dysonsurvivors.dysonsurvivors.Models.Inventaire.Equipements.Armes.ChampignonHallucinogene;
 
 import java.util.ArrayList;
 
-import com.dysonsurvivors.dysonsurvivors.Models.IIsHitted;
+import com.dysonsurvivors.dysonsurvivors.Models.LootTable;
 import com.dysonsurvivors.dysonsurvivors.Models.Monstre;
 import javafx.scene.layout.Pane;
 
@@ -27,10 +28,14 @@ public class MonstreController {
     public void creerMonstre(int nbMonstres,int difficulty) {
         
         // Boucle qui fait des monstres et les ajoute a une liste de monstres:
+        LootTable lootTable = new LootTable();
+        String sprite = "ghost_1.png"; //Par defaut
+        lootTable.addItem(new ChampignonHallucinogene(), 0.1);
         for (int i = 0; i < nbMonstres; i++) {
             int niveau = (int) (Math.random() * 3) + 1+difficulty;
             int atk = 1 + difficulty;
-            Monstre monstre = monstreFactory.creerMonstre(niveau ,atk);
+            sprite = "ghost_"+((int) (Math.random() * 3)+1)+".png";
+            Monstre monstre = monstreFactory.creerMonstre(niveau ,atk, sprite, lootTable);
             // fais apparaitre les monstres a des positions aleatoires
 
             int spawnX = (int) (Math.random() * gamePane.getWidth());
@@ -52,7 +57,8 @@ public class MonstreController {
     }
 
     public void tuerMonstre(Monstre monstre) {
-        // Enleve le monstre de la liste de monstres et de la gamePane
+        // Enleve le monstre de la liste de monstres et du gamePane
+        monstre.die();
         gamePane.getChildren().remove(monstre.getHitbox());
         for (int i = 0; i < listeMonstres.size(); i++) {
             if (listeMonstres.get(i) == monstre) {
@@ -60,13 +66,4 @@ public class MonstreController {
             }
         }
     }
-
-    /*public void isHitted() {
-        // Boucle qui verifie si le joueur est touche par un monstre
-        for (Monstre monstre : listeMonstres) {
-            if (monstre.getHitbox().getBoundsInParent().intersects(joueur.getHitbox().getBoundsInParent())) {
-                joueur.prendreDegats(monstre.getAtk());
-            }
-        }
-    }*/
 }
