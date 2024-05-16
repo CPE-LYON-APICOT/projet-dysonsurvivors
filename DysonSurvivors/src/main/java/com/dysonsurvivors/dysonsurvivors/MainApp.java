@@ -81,12 +81,6 @@ public class MainApp extends Application {
 
         paramController = new ParamController(gamePane, joueurController, soundController);
 
-        // Création d'objets pour l'ajouter à l'inventaire*
-        for (int i = 1; i < 2; i++) {
-            Objet objet = new Bulle();
-            joueur.getInventaire().ajouterObjet(objet);
-        }
-
         inventaireController = new InventaireController(joueur.getInventaire(), paramController.getParamPane());
         inventaireController.afficherInventaire();
         paramController.setInvController(inventaireController);

@@ -1,6 +1,8 @@
 package com.dysonsurvivors.dysonsurvivors.Models;
 
 import com.dysonsurvivors.dysonsurvivors.Models.Inventaire.Inventaire;
+import com.dysonsurvivors.dysonsurvivors.Models.Inventaire.Equipements.Armes.Bulle;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Rectangle2D;
@@ -79,6 +81,9 @@ public class Joueur extends Personnage{
         stats.put(Stats.CHANCE, 1);
 
         inventaire = new Inventaire();
+        Objet objet = new Bulle();
+        this.getInventaire().ajouterObjet(objet);
+
         this.invincible = false; // Le joueur n'est pas invincible au début
         initInvincibleTimeline(); // Initialisez la timeline d'invincibilité
     }

@@ -19,22 +19,40 @@ public class LootTable {
         items.put(objet, probabiliteDrop);
     }
 
+
     public boolean dropItem() {
         Random random = new Random();
-        double totalWeight = 0.0;
-        for (double prob : items.values()) {
-            totalWeight += prob;
-        }
-        double randomValue = random.nextDouble() * totalWeight;
+        double randomValue = random.nextDouble(); // Génère un nombre aléatoire entre 0 et 1
+
         for (Map.Entry<Objet, Double> entry : items.entrySet()) {
-            randomValue -= entry.getValue();
-            if (randomValue <= 0.0) {
-                joueur.getInventaire().ajouterObjet(entry.getKey());
+            if (randomValue <= entry.getValue()) {
+                // Drop this item
                 System.out.println("Dropped: " + entry.getKey().getNom());
+                joueur.getInventaire().ajouterObjet(entry.getKey());
                 return true;
             }
         }
         // No item dropped
+        System.out.println("No item dropped");
         return false;
     }
+
+    // public boolean dropItem() {
+    //     Random random = new Random();
+    //     double totalWeight = 0.0;
+    //     for (double prob : items.values()) {
+    //         totalWeight += prob;
+    //     }
+    //     double randomValue = random.nextDouble() * totalWeight;
+    //     for (Map.Entry<Objet, Double> entry : items.entrySet()) {
+    //         randomValue -= entry.getValue();
+    //         if (randomValue <= 0.0) {
+                
+    //             System.out.println("Dropped: " + entry.getKey().getNom());
+    //             return true;
+    //         }
+    //     }
+    //     // No item dropped
+    //     return false;
+    // }
 }
