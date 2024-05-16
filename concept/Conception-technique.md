@@ -51,6 +51,7 @@ La majorité des fonctionnalité essentielles du jeu ont été implémentées so
 - Plus de types de monstres (voire boss)
 - Plus d'objets différents (Armes, Armures, Consommables)
 - Equilibrage du jeu
+- Collisions du terrain
 
 ---
 # Partie "Développeur" (plus technique) :

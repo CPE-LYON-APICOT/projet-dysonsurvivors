@@ -88,7 +88,7 @@ public class Bulle extends Arme{
                             /*attaqueEnCours = false;*/
 
                             // Afficher les points de vie du monstre
-                            System.out.println("PV du monstre : " + monstre.getPv());
+                            /*System.out.println("PV du monstre : " + monstre.getPv());*/
                             break; // Sortir de la boucle dès qu'une collision est détectée
                         }
                     }
