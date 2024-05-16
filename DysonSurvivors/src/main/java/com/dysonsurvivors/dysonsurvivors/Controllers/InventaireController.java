@@ -27,8 +27,8 @@ public class InventaireController {
     public void afficherInventaire() {
         inventairePane.getChildren().clear(); // Effacer le contenu précédent de l'inventaire
         inventairePane.getStyleClass().add("inventaire-pane");
-        inventairePane.setLayoutX(50);
-        inventairePane.setLayoutY(-50);
+        inventairePane.setLayoutX(250);
+        inventairePane.setLayoutY(0);
 
         // Parcourir les objets dans l'inventaire et les afficher sur l'écran de jeu
         Objet[] objets = inventaire.getObjets(); // Récupérer les objets de l'inventaire

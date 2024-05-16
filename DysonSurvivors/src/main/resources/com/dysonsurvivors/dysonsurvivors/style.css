@@ -20,7 +20,7 @@
     -fx-background-color: rgba(31, 31, 31, 0.8);
     -fx-border-color: rgb(255, 233, 0, 1);
     -fx-background-radius: 5px;
-    -fx-border-width: 1px; /* Largeur de la bordure */
+    -fx-border-width: 2px; /* Largeur de la bordure */
     -fx-border-radius: 5px; /* Rayon de la bordure */
 }
 
