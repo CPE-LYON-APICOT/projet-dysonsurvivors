@@ -1,0 +1,25 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "MainApp",
+            "request": "launch",
+            "mainClass": "com.dysonsurvivors.dysonsurvivors/com.dysonsurvivors.dysonsurvivors.MainApp",
+            "projectName": "DysonSurvivors"
+        },
+        {
+            "type": "java",
+            "name": "HelloApplication",
+            "request": "launch",
+            "mainClass": "com.dysonsurvivors.dysonsurvivors/com.dysonsurvivors.dysonsurvivors.HelloApplication",
+            "projectName": ""
+        },
+        {
+            "name": "Launch Edge",
+            "request": "launch",
+            "type": "pwa-msedge",
+            "url": "http://localhost:8080",
+            "webRoot": "C:\\wamp64\\www\\exo01.php"
+        }
+    ]
+}

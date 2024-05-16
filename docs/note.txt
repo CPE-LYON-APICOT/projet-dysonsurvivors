@@ -1,0 +1,5 @@
+Sous class d'arme et armure avec une interface commune : elementaire
+
+Oberserver sur un event genre 500mobs tué ou encyclopédie sur le menu pause
+
+Objectif : interface, personnage, mob qui se deplace avec differente vitesse
