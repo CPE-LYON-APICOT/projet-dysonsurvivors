@@ -36,6 +36,10 @@ public abstract class Personnage{
         return hitbox;
     }
 
+    public int getPv() {
+        return pv;
+    }
+
     public void perdreVie(int degats) {
         pv -= degats;
     }

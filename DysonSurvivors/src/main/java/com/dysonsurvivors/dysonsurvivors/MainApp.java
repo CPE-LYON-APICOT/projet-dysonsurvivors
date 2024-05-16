@@ -136,6 +136,10 @@ public class MainApp extends Application {
                 if (elapsedTime > desiredFrameTime) {
                     lastUpdate = currentNanoTime;
 
+                    if (joueur.getPv() <= 0) {
+                        stop();
+                    }
+                    
                     if (!paramController.getIsActive()) {
                         update();
                     }
